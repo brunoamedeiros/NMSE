@@ -847,6 +847,11 @@ public partial class MainFormResources : Form
         var config = AppConfig.Instance;
         config.Initialize();
 
+        var theme = Enum.TryParse<AppTheme>(config.Theme, ignoreCase: true, out var savedTheme)
+            && Enum.IsDefined(savedTheme) ? savedTheme : AppTheme.Light;
+        ThemeManager.SetTheme(theme);
+        UpdateThemeMenuChecks();
+
         if (config.MainFrameWidth > 0 && config.MainFrameHeight > 0)
         {
             Location = new Point(config.MainFrameX, config.MainFrameY);
@@ -2839,10 +2844,14 @@ public partial class MainFormResources : Form
 
     /// <summary>
     /// Sets the active application theme, re-applies it to this form, and updates
-    /// the check marks on the Theme menu.
+    /// the check marks on the Theme menu. Persists the selection for the next launch.
     /// </summary>
     private void SetTheme(AppTheme theme)
     {
+        var config = AppConfig.Instance;
+        config.Theme = theme.ToString();
+        config.Save();
+
         ThemeManager.SetTheme(theme);
         // SetTheme fires ThemeChanged which triggers ReapplyTheme, so we don't
         // need to call ThemeApplicator.ApplyToForm here directly. But re-applying
