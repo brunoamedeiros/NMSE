@@ -2138,5 +2138,13 @@
   "theme_dark": "Dark",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "Deep Space",
+  "discovery.deep_space_hint": "Space points of interest discovered in deep space (Cosmos 7.0). Deleting an entry marks the location as undiscovered.",
+  "discovery.deep_space_slots": "{0} of {1} discovery slots used",
+  "discovery.deep_space_unavailable": "No deep space discovery data in this save (requires Cosmos 7.0 or later).",
+  "discovery.col_poi_data": "POI Data",
+  "discovery.delete_poi_single": "Are you sure you want to delete this deep space discovery?",
+  "discovery.delete_poi_multi": "Are you sure you want to delete {0} deep space discoveries?",
+  "discovery.delete_poi_title": "Delete Discovery"
 }

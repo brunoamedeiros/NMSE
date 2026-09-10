@@ -2105,5 +2105,13 @@
   "theme_dark": "Dunkel",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "Tiefraum",
+  "discovery.deep_space_hint": "Im Tiefraum entdeckte Orte von Interesse (Cosmos 7.0). Das Löschen eines Eintrags markiert den Ort als unentdeckt.",
+  "discovery.deep_space_slots": "{0} von {1} Entdeckungsplätzen belegt",
+  "discovery.deep_space_unavailable": "Dieser Spielstand enthält keine Tiefraum-Entdeckungsdaten (erfordert Cosmos 7.0 oder neuer).",
+  "discovery.col_poi_data": "POI-Daten",
+  "discovery.delete_poi_single": "Möchten Sie diese Tiefraum-Entdeckung wirklich löschen?",
+  "discovery.delete_poi_multi": "Möchten Sie {0} Tiefraum-Entdeckungen wirklich löschen?",
+  "discovery.delete_poi_title": "Entdeckung löschen"
 }

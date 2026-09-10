@@ -2105,5 +2105,13 @@
   "theme_dark": "Escuro",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "Espaço profundo",
+  "discovery.deep_space_hint": "Pontos de interesse descobertos no espaço profundo (Cosmos 7.0). Excluir uma entrada marca o local como não descoberto.",
+  "discovery.deep_space_slots": "{0} de {1} slots de descoberta usados",
+  "discovery.deep_space_unavailable": "Este save não contém dados de descobertas do espaço profundo (requer Cosmos 7.0 ou superior).",
+  "discovery.col_poi_data": "Dados do POI",
+  "discovery.delete_poi_single": "Tem certeza de que deseja excluir esta descoberta do espaço profundo?",
+  "discovery.delete_poi_multi": "Tem certeza de que deseja excluir {0} descobertas do espaço profundo?",
+  "discovery.delete_poi_title": "Excluir descoberta"
 }

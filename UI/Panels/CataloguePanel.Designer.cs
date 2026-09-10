@@ -518,7 +518,90 @@ partial class CataloguePanel
         locationsTab.Controls.Add(locationsLayout);
         _tabControl.TabPages.Add(locationsTab);
 
-        // --- Tab 7: Known Fish ---
+        // --- Tab 7: Deep Space Discoveries (Cosmos 7.0 space POIs) ---
+        var deepSpaceTab = new TabPage("Deep Space Discoveries");
+        var deepSpaceLayout = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            ColumnCount = 1,
+            RowCount = 4
+        };
+        deepSpaceLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // header / goto
+        deepSpaceLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // buttons
+        deepSpaceLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100)); // grid
+        deepSpaceLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // detail
+
+        var poiHeaderPanel = new TableLayoutPanel { AutoSize = true, Dock = DockStyle.Top, ColumnCount = 3, RowCount = 1 };
+        poiHeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        poiHeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        poiHeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        poiHeaderPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _poiHintLabel = new Label
+        {
+            AutoSize = true,
+            Text = "Space points of interest discovered in deep space. Deleting an entry marks the location as undiscovered.",
+            Padding = new Padding(3, 6, 3, 3)
+        };
+        poiHeaderPanel.Controls.Add(_poiHintLabel, 0, 0);
+        poiHeaderPanel.Controls.Add(CreateGotoButton(["PlayerStateData", "SpacePoiDiscoveries"]), 2, 0);
+        deepSpaceLayout.Controls.Add(poiHeaderPanel, 0, 0);
+
+        var poiBtnPanel = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, FlowDirection = FlowDirection.LeftToRight };
+        _deletePoiBtn = new Button { Text = "Delete Selected", AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, MinimumSize = new Size(75, 0) };
+        _deletePoiBtn.Click += DeleteSpacePoi_Click;
+        poiBtnPanel.Controls.Add(_deletePoiBtn);
+        _poiCountLabel = new Label { AutoSize = true, Padding = new Padding(10, 6, 0, 0) };
+        poiBtnPanel.Controls.Add(_poiCountLabel);
+        deepSpaceLayout.Controls.Add(poiBtnPanel, 0, 1);
+
+        _poiGrid = new DataGridView
+        {
+            Dock = DockStyle.Fill,
+            AllowUserToAddRows = false,
+            AllowUserToDeleteRows = false,
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            RowHeadersVisible = false,
+            ReadOnly = true
+        };
+        _poiGrid.Columns.Add(new DataGridViewTextBoxColumn { Name = "Index", HeaderText = "#", FillWeight = 4 });
+        _poiGrid.Columns.Add(new DataGridViewTextBoxColumn { Name = "Galaxy", HeaderText = "Galaxy", FillWeight = 22 });
+        _poiGrid.Columns.Add(new DataGridViewTextBoxColumn { Name = "PortalCode", HeaderText = "Portal Code (Hex)", FillWeight = 16 });
+        _poiGrid.Columns.Add(new DataGridViewTextBoxColumn { Name = "PortalCodeDec", HeaderText = "Portal Code (Dec)", FillWeight = 26 });
+        _poiGrid.Columns.Add(new DataGridViewTextBoxColumn { Name = "SignalBooster", HeaderText = "Signal Booster", FillWeight = 22 });
+        _poiGrid.Columns.Add(new DataGridViewTextBoxColumn { Name = "PoiData", HeaderText = "POI Data", FillWeight = 24 });
+        _poiGrid.SelectionChanged += OnSpacePoiSelectionChanged;
+        _poiGrid.CellPainting += OnLocationGalaxyCellPainting;
+        deepSpaceLayout.Controls.Add(_poiGrid, 0, 2);
+
+        var poiDetailPanel = new FlowLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            AutoSize = true,
+            FlowDirection = FlowDirection.LeftToRight,
+            Padding = new Padding(5)
+        };
+        _poiGlyphsCaptionLabel = new Label { Text = "Portal Glyphs:", AutoSize = true, Padding = new Padding(0, 5, 5, 0) };
+        poiDetailPanel.Controls.Add(_poiGlyphsCaptionLabel);
+        _poiGlyphPanel = new FlowLayoutPanel
+        {
+            AutoSize = true,
+            WrapContents = false,
+            FlowDirection = FlowDirection.LeftToRight,
+            Margin = new Padding(0),
+            Padding = new Padding(0),
+        };
+        poiDetailPanel.Controls.Add(_poiGlyphPanel);
+        _poiGalaxyCaptionLabel = new Label { Text = "  Galaxy:", AutoSize = true, Padding = new Padding(10, 5, 5, 0) };
+        poiDetailPanel.Controls.Add(_poiGalaxyCaptionLabel);
+        _poiGalaxyLabel = new Label { AutoSize = true, Padding = new Padding(0, 4, 0, 0), Font = new Font(DefaultFont.FontFamily, 9, FontStyle.Bold) };
+        poiDetailPanel.Controls.Add(_poiGalaxyLabel);
+        deepSpaceLayout.Controls.Add(poiDetailPanel, 0, 3);
+
+        deepSpaceTab.Controls.Add(deepSpaceLayout);
+        _tabControl.TabPages.Add(deepSpaceTab);
+
+        // --- Tab 8: Known Fish ---
         var fishTab = new TabPage("Known Fish");
         var fishLayout = new TableLayoutPanel
         {
@@ -782,7 +865,17 @@ partial class CataloguePanel
     private Label _locGalaxyCoreCaptionLabel = null!;
     private Label _locGalaxyDot = null!;
 
-    // Tab 7: Known Fish
+    // Tab 7: Deep Space Discoveries (Cosmos 7.0)
+    private DataGridView _poiGrid = null!;
+    private Button _deletePoiBtn = null!;
+    private Label _poiHintLabel = null!;
+    private Label _poiCountLabel = null!;
+    private FlowLayoutPanel _poiGlyphPanel = null!;
+    private Label _poiGlyphsCaptionLabel = null!;
+    private Label _poiGalaxyCaptionLabel = null!;
+    private Label _poiGalaxyLabel = null!;
+
+    // Tab 8: Known Fish
     private DataGridView _fishGrid = null!;
     private TextBox _fishFilterBox = null!;
     private Button _fishFilterClearBtn = null!;

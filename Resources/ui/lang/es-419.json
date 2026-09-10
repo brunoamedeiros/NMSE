@@ -2105,5 +2105,13 @@
   "theme_dark": "Oscuro",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "Espacio profundo",
+  "discovery.deep_space_hint": "Puntos de interés descubiertos en el espacio profundo (Cosmos 7.0). Eliminar una entrada marca la ubicación como no descubierta.",
+  "discovery.deep_space_slots": "{0} de {1} espacios de descubrimiento usados",
+  "discovery.deep_space_unavailable": "Esta partida no contiene datos de descubrimientos del espacio profundo (requiere Cosmos 7.0 o posterior).",
+  "discovery.col_poi_data": "Datos del PDI",
+  "discovery.delete_poi_single": "¿Seguro que quieres eliminar este descubrimiento del espacio profundo?",
+  "discovery.delete_poi_multi": "¿Seguro que quieres eliminar {0} descubrimientos del espacio profundo?",
+  "discovery.delete_poi_title": "Eliminar descubrimiento"
 }

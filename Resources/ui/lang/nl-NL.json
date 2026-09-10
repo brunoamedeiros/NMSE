@@ -2105,5 +2105,13 @@
   "theme_dark": "Donker",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "Diepe ruimte",
+  "discovery.deep_space_hint": "Interessante locaties ontdekt in de diepe ruimte (Cosmos 7.0). Het verwijderen van een item markeert de locatie als onontdekt.",
+  "discovery.deep_space_slots": "{0} van {1} ontdekkingsplaatsen gebruikt",
+  "discovery.deep_space_unavailable": "Dit opgeslagen spel bevat geen ontdekkingsgegevens voor de diepe ruimte (vereist Cosmos 7.0 of nieuwer).",
+  "discovery.col_poi_data": "POI-gegevens",
+  "discovery.delete_poi_single": "Weet je zeker dat je deze ontdekking in de diepe ruimte wilt verwijderen?",
+  "discovery.delete_poi_multi": "Weet je zeker dat je {0} ontdekkingen in de diepe ruimte wilt verwijderen?",
+  "discovery.delete_poi_title": "Ontdekking verwijderen"
 }
