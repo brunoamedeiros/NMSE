@@ -296,6 +296,14 @@
 		"IconKey": "FOSSIL"
 	},
 	{
+		"Id": "^UI_GUIDE_TOPIC_STATIONCUST",
+		"Name": "Space Station Ownership",
+		"Name_LocStr": "UI_GUIDE_TOPIC_STATIONCUST",
+		"Category": "Construction",
+		"Category_LocStr": "UI_GUIDE_HEADING_BASES",
+		"IconKey": "STATIONCUSTOMISATION"
+	},
+	{
 		"Id": "^UI_GUIDE_TOPIC_TRADE_1",
 		"Name": "Making Money",
 		"Name_LocStr": "UI_GUIDE_TOPIC_TRADE_1",

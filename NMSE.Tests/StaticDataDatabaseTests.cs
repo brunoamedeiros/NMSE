@@ -883,7 +883,7 @@ public class StaticDataDatabaseTests
     public void WordDatabase_LoadFromFile_ReturnsExpectedWordCount()
     {
         var db = LoadWordDbFromJson();
-        Assert.Equal(2150, db.Count);
+        Assert.Equal(2151, db.Count);
     }
 
     [Fact]
@@ -2193,9 +2193,10 @@ public class StaticDataDatabaseTests
     }
 
     [Fact]
-    public void WikiGuideDatabase_TopicCount_Is57()
+    public void WikiGuideDatabase_IncludesCosmosStationOwnershipTopic()
     {
-        Assert.Equal(57, WikiGuideDatabase.Topics.Count);
+        Assert.Equal(58, WikiGuideDatabase.Topics.Count);
+        Assert.Equal("Space Station Ownership", WikiGuideDatabase.GetTopicName("^UI_GUIDE_TOPIC_STATIONCUST"));
     }
 
     [Fact]

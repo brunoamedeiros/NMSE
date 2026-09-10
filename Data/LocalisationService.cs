@@ -103,7 +103,8 @@ public class LocalisationService
         if (string.IsNullOrEmpty(locKey) || _translations == null)
             return null;
 
-        return _translations.TryGetValue(locKey, out string? value) ? value : null;
+        return _translations.TryGetValue(locKey, out string? value)
+            || _translations.TryGetValue(locKey.ToUpperInvariant(), out value) ? value : null;
     }
 
     /// <summary>

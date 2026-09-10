@@ -1920,6 +1920,31 @@
 		"RidingPartModifiers": null
 	},
 	{
+		"Id": "DIPLO_PET",
+		"ForceType": "None",
+		"RealType": "None",
+		"MoveArea": "Ground",
+		"EcoSystemCreature": false,
+		"CanBeFemale": false,
+		"OnlySpawnWhenIdIsForced": false,
+		"MinScale": 0.4,
+		"MaxScale": 12.0,
+		"Rarity": "Uncommon",
+		"EggType": "DEFAULT",
+		"CanBeUsedInPetBattler": true,
+		"PetBattlerForcedAffinity": "Normal",
+		"PetAccessorySlots": [
+			{
+				"RequiredDescriptor": "",
+				"AccessoryGroups": [
+					"LEFT",
+					"RIGHT"
+				]
+			}
+		],
+		"RidingPartModifiers": null
+	},
+	{
 		"Id": "QUAD_PET",
 		"ForceType": "Quad",
 		"RealType": "None",

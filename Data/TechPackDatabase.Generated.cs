@@ -3,9 +3,8 @@
 // This file is produced by the NMSE.Extractor from NMS game data.
 // It provides a tech catalog for enriching TechPackDatabase entries.
 // Regenerate by running the extractor against updated game files.
-// NMS Version: 6.24 REMNANT (27 February 2026)
-// Generated: 2026-03-14 08:43:09 UTC
-// Total technologies catalogued: 328
+// Generated: 2026-09-10 17:39:44 UTC
+// Total technologies catalogued: 333
 // </auto-generated>
 
 using System.Collections.Generic;
@@ -37,7 +36,7 @@ public static partial class TechPacks
 
     /// <summary>
     /// Game-data tech catalog extracted from NMS_REALITY_GCTECHNOLOGYTABLE.
-    /// Contains 328 technology entries with icon paths and category info.
+    /// Contains 333 technology entries with icon paths and category info.
     /// </summary>
     public sealed class TechCatalogEntry
     {
@@ -165,6 +164,9 @@ public static partial class TechPacks
         ["MAINT_ROBO8"] = new TechCatalogEntry { Id = "MAINT_ROBO8", IconPath = "textures/ui/frontend/icons/update3/mainttech.fuel2.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
         ["MAINT_ROBO9"] = new TechCatalogEntry { Id = "MAINT_ROBO9", IconPath = "textures/ui/frontend/icons/update3/mainttech.fuel3.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
         ["MAINT_S13"] = new TechCatalogEntry { Id = "MAINT_S13", IconPath = "textures/ui/frontend/icons/update3/mindarc.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
+        ["MAINT_S22_PART1"] = new TechCatalogEntry { Id = "MAINT_S22_PART1", IconPath = "textures/ui/frontend/icons/update3/tradeprod.energy2.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
+        ["MAINT_S22_PART2"] = new TechCatalogEntry { Id = "MAINT_S22_PART2", IconPath = "textures/ui/frontend/icons/update3/farmprod.3.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
+        ["MAINT_S22_PART3"] = new TechCatalogEntry { Id = "MAINT_S22_PART3", IconPath = "textures/ui/frontend/icons/update3/tradeprod.component4.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
         ["MAINT_SEALOCK1"] = new TechCatalogEntry { Id = "MAINT_SEALOCK1", IconPath = "textures/ui/frontend/icons/u4products/product.clampearl.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
         ["MAINT_SEALOCK2"] = new TechCatalogEntry { Id = "MAINT_SEALOCK2", IconPath = "textures/ui/frontend/icons/u4products/product.tridentkey.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
         ["MAINT_TECH1"] = new TechCatalogEntry { Id = "MAINT_TECH1", IconPath = "textures/ui/frontend/icons/update3/mainttech.tech1.dds", Category = "Maintenance", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
@@ -217,6 +219,7 @@ public static partial class TechPacks
         ["PROTECT"] = new TechCatalogEntry { Id = "PROTECT", IconPath = "textures/ui/frontend/icons/technology/render.protectgeneric.dds", Category = "Suit", InferredClass = "NONE", IsUpgrade = false, IsCore = true, IsProcedural = false },
         ["RAILGUN"] = new TechCatalogEntry { Id = "RAILGUN", IconPath = "textures/ui/frontend/icons/technology/render.blazejavelin.dds", Category = "Weapon", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["S15_FISHLASER"] = new TechCatalogEntry { Id = "S15_FISHLASER", IconPath = "textures/ui/frontend/icons/specialshop/special1.expedition.s15fishlaser.dds", Category = "Weapon", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
+        ["S22_LINK"] = new TechCatalogEntry { Id = "S22_LINK", IconPath = "textures/ui/frontend/icons/technology/tech.s22link.dds", Category = "Suit", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["SCAN1"] = new TechCatalogEntry { Id = "SCAN1", IconPath = "textures/ui/frontend/icons/technology/render.scan.dds", Category = "Weapon", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["SCANBINOC1"] = new TechCatalogEntry { Id = "SCANBINOC1", IconPath = "textures/ui/frontend/icons/technology/render.binoculars.dds", Category = "Weapon", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["SCOPE"] = new TechCatalogEntry { Id = "SCOPE", IconPath = "textures/ui/frontend/icons/technology/render.binocsmod.dds", Category = "Weapon", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
@@ -284,6 +287,7 @@ public static partial class TechPacks
         ["TERRAIN_GREN"] = new TechCatalogEntry { Id = "TERRAIN_GREN", IconPath = "textures/ui/frontend/icons/technology/render.terraingrenade.dds", Category = "Weapon", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["T_BOBBLE_APOLLO"] = new TechCatalogEntry { Id = "T_BOBBLE_APOLLO", IconPath = "textures/ui/frontend/icons/specialshop/special.bobbleapollo.dds", Category = "AllShips", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["T_BOBBLE_ART"] = new TechCatalogEntry { Id = "T_BOBBLE_ART", IconPath = "textures/ui/frontend/icons/specialshop/special.bobbleartemis.dds", Category = "AllShips", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
+        ["T_BOBBLE_ASTRO"] = new TechCatalogEntry { Id = "T_BOBBLE_ASTRO", IconPath = "textures/ui/frontend/icons/specialshop/expedition.s23.bobbleastro.dds", Category = "AllShips", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["T_BOBBLE_ATLAS"] = new TechCatalogEntry { Id = "T_BOBBLE_ATLAS", IconPath = "textures/ui/frontend/icons/specialshop/special.bobbleatlas.dds", Category = "AllShips", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["T_BOBBLE_NADA"] = new TechCatalogEntry { Id = "T_BOBBLE_NADA", IconPath = "textures/ui/frontend/icons/specialshop/special.bobblenada.dds", Category = "AllShips", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },
         ["T_BOBBLE_NULL"] = new TechCatalogEntry { Id = "T_BOBBLE_NULL", IconPath = "textures/ui/frontend/icons/specialshop/special.bobblenul.dds", Category = "AllShips", InferredClass = "NONE", IsUpgrade = false, IsCore = false, IsProcedural = false },

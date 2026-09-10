@@ -2530,6 +2530,17 @@
 		"UnlockedByStatValue": 0
 	},
 	{
+		"Id": "T_EXPD23",
+		"Name": "Time Traveller {0}",
+		"Name_LocStr": "UI_PLAYER_TITLE_EXPD23",
+		"UnlockDescription": "???",
+		"UnlockDescription_LocStr": "UI_GUIDE_UNKNOWN",
+		"AlreadyUnlockedDescription": "Earned for Expedition accomplishments",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_EXPD",
+		"UnlockedByStat": null,
+		"UnlockedByStatValue": 0
+	},
+	{
 		"Id": "T_BUGHUNT1",
 		"Name": "{0} the Roach",
 		"Name_LocStr": "UI_PLAYER_TITLE_BUGHUNT1",
@@ -2758,6 +2769,17 @@
 		"AlreadyUnlockedDescription": "Iteration reset by unspeakable entity",
 		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_DEATH11",
 		"UnlockedByStat": "DEATH_HORROR",
+		"UnlockedByStatValue": 1
+	},
+	{
+		"Id": "T_DEATH12",
+		"Name": "Icarus {0}",
+		"Name_LocStr": "UI_PLAYER_TITLE_DEATH12",
+		"UnlockDescription": "???",
+		"UnlockDescription_LocStr": "UI_GUIDE_UNKNOWN",
+		"AlreadyUnlockedDescription": "Flew too close to the sun",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_DEATH12",
+		"UnlockedByStat": "DEATH_SUN",
 		"UnlockedByStatValue": 1
 	},
 	{
@@ -3727,5 +3749,60 @@
 		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_PB_DAILY4",
 		"UnlockedByStat": "PB_D_NEXUS",
 		"UnlockedByStatValue": 0
+	},
+	{
+		"Id": "T_STATION_OWNED",
+		"Name": "Station Director {0}",
+		"Name_LocStr": "UI_PLAYER_TITLE_OWN_STATION",
+		"UnlockDescription": "Claim a Space Station",
+		"UnlockDescription_LocStr": "UI_PLAYER_TDESC_OWN_STATION",
+		"AlreadyUnlockedDescription": "Became Director of a Space Station",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_OWN_STATION",
+		"UnlockedByStat": "STATIONS_OWNED",
+		"UnlockedByStatValue": 1
+	},
+	{
+		"Id": "T_POI_HULK",
+		"Name": "EVA Specialist {0}",
+		"Name_LocStr": "UI_PLAYER_TITLE_POI_HULK",
+		"UnlockDescription": "Salvage rare items from deep-space hulks",
+		"UnlockDescription_LocStr": "UI_PLAYER_TDESC_POI_HULK",
+		"AlreadyUnlockedDescription": "Salvaged %NUM% rare items from deep-space hulks",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_POI_HULK",
+		"UnlockedByStat": "POI_HULK_RARE",
+		"UnlockedByStatValue": 30
+	},
+	{
+		"Id": "T_POI_SLIMEPOST",
+		"Name": "{0} the Infested",
+		"Name_LocStr": "UI_PLAYER_TITLE_POI_SLIMEPOST",
+		"UnlockDescription": "Salvage rare items from infested outposts",
+		"UnlockDescription_LocStr": "UI_PLAYER_TDESC_POI_SLIMEPOST",
+		"AlreadyUnlockedDescription": "Salvaged %NUM% rare items from infested outposts",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_POI_SLIMEPOST",
+		"UnlockedByStat": "POI_SLIME_RARE",
+		"UnlockedByStatValue": 15
+	},
+	{
+		"Id": "T_POI_AST",
+		"Name": "Crystallographer {0}",
+		"Name_LocStr": "UI_PLAYER_TITLE_POI_AST",
+		"UnlockDescription": "Extract condensed stellar ice from asteroid belts",
+		"UnlockDescription_LocStr": "UI_PLAYER_TDESC_POI_AST",
+		"AlreadyUnlockedDescription": "Extracted %NUM% condensed stellar ice from asteroid belts",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_POI_AST",
+		"UnlockedByStat": "POI_AST_RARE",
+		"UnlockedByStatValue": 50
+	},
+	{
+		"Id": "T_WAKE_TITAN",
+		"Name": "instance16 {0}",
+		"Name_LocStr": "UI_PLAYER_TITLE_WAKE_TITAN",
+		"UnlockDescription": "???",
+		"UnlockDescription_LocStr": "UI_GUIDE_UNKNOWN",
+		"AlreadyUnlockedDescription": "Sought hidden co-ordinates",
+		"AlreadyUnlockedDescription_LocStr": "UI_TITLE_OWNED_WAKE_TITAN",
+		"UnlockedByStat": "WAKE_TITAN",
+		"UnlockedByStatValue": 1
 	}
 ]

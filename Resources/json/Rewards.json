@@ -1,25 +1,190 @@
 [
 	{
-		"Id": "^SWARM_TROPHY_R",
-		"Name": "Prismatic Core",
-		"Name_LocStr": "BLD_SWARM_TROPHY_NAME",
-		"Subtitle_LocStr": "BLD_SWARM_TROPHY_SUB",
+		"Id": "^EXPD_TITLE23",
+		"Name": "Title: 'time Traveller'",
+		"Name_LocStr": "UI_EXPD_TITLE_23_NAME",
+		"Subtitle_LocStr": "UI_SPEC_TITLE_SUB",
 		"Category": "season",
-		"ProductId": "SWARM_TROPHY_R",
-		"MustBeUnlocked": true,
-		"SeasonId": 22,
+		"ProductId": "EXPD_TITLE23",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 5
+	},
+	{
+		"Id": "^EXPD_DECAL23",
+		"Name": "Our Journey Continues Decal",
+		"Name_LocStr": "BLD_DECAL_EXPD_23_NAME",
+		"Subtitle_LocStr": "BLD_DECAL_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_DECAL23",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 5
+	},
+	{
+		"Id": "^EXPD_BANNER23",
+		"Name": "Our Journey Continues Banner",
+		"Name_LocStr": "UI_BANNER_EXPD_23_NAME",
+		"Subtitle_LocStr": "UI_BANNER_SUB",
+		"Category": "season",
+		"ProductId": "EXPD_BANNER23",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 5
+	},
+	{
+		"Id": "^EXPD_EGG_23",
+		"Name": "Diplo Egg",
+		"Name_LocStr": "UI_EXPD_EGG_23_NAME",
+		"Subtitle_LocStr": "UI_EXPD_EGG_23_SUB",
+		"Category": "season",
+		"ProductId": "EXPD_EGG_23",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
 		"StageId": -1
 	},
 	{
-		"Id": "^SWARM_TROPHY_G",
-		"Name": "Prismatic Core",
-		"Name_LocStr": "BLD_SWARM_TROPHY_NAME",
-		"Subtitle_LocStr": "BLD_SWARM_TROPHY_SUB",
+		"Id": "^EXPD_SHIP23A",
+		"Name": "Golden Rasamama S36",
+		"Name_LocStr": "UI_EXPD_SHIP_23A_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
 		"Category": "season",
-		"ProductId": "SWARM_TROPHY_G",
-		"MustBeUnlocked": true,
-		"SeasonId": 22,
-		"StageId": -1
+		"ProductId": "EXPD_SHIP23A",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 4
+	},
+	{
+		"Id": "^EXPD_SHIP23B",
+		"Name": "Vintage Interceptor",
+		"Name_LocStr": "UI_EXPD_SHIP_23B_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
+		"Category": "season",
+		"ProductId": "EXPD_SHIP23B",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 4
+	},
+	{
+		"Id": "^EXPD_GUN23",
+		"Name": "Starbound V0.27",
+		"Name_LocStr": "UI_EXPD_GUN_23_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_GUN_SUB",
+		"Category": "season",
+		"ProductId": "EXPD_GUN23",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 3
+	},
+	{
+		"Id": "^BOBBLE_ASTRO",
+		"Name": "Astronaut Figurine",
+		"Name_LocStr": "UI_BOBBLE_ASTRO_NAME",
+		"Subtitle_LocStr": "UI_BOBBLE_SUB",
+		"Category": "season",
+		"ProductId": "BOBBLE_ASTRO",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 2
+	},
+	{
+		"Id": "^EXPD_POSTER23A",
+		"Name": "Framed Launch Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23A_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23A",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23B",
+		"Name": "Framed \"atlas Rises\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23B_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23B",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23C",
+		"Name": "Framed \"next\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23C_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23C",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23D",
+		"Name": "Framed \"beyond\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23D_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23D",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23E",
+		"Name": "Framed \"origins\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23E_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23E",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23F",
+		"Name": "Framed \"frontiers\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23F_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23F",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23G",
+		"Name": "Framed \"echoes\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23G_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23G",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23H",
+		"Name": "Framed \"worlds\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23H_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23H",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
+	},
+	{
+		"Id": "^EXPD_POSTER23I",
+		"Name": "Framed \"voyagers\" Art",
+		"Name_LocStr": "BLD_EXPD_POSTER23I_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "season",
+		"ProductId": "EXPD_POSTER23I",
+		"MustBeUnlocked": false,
+		"SeasonId": 23,
+		"StageId": 1
 	},
 	{
 		"Id": "^SWARM_TROPHY_B",
@@ -3056,6 +3221,246 @@
 		"MustBeUnlocked": false,
 		"SeasonId": 1,
 		"StageId": 1
+	},
+	{
+		"Id": "^TWITCH_406",
+		"Name": "Scrambled Signal Poster",
+		"Name_LocStr": "BLD_S_POSTER29_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "twitch",
+		"ProductId": "S_POSTER29"
+	},
+	{
+		"Id": "^TWITCH_407",
+		"Name": "Ship Parts Poster",
+		"Name_LocStr": "BLD_S_POSTER30_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "twitch",
+		"ProductId": "S_POSTER30"
+	},
+	{
+		"Id": "^TWITCH_408",
+		"Name": "Bake Sale Poster",
+		"Name_LocStr": "BLD_S_POSTER31_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "twitch",
+		"ProductId": "S_POSTER31"
+	},
+	{
+		"Id": "^TWITCH_409",
+		"Name": "Starborn Poster",
+		"Name_LocStr": "BLD_EXPD_POSTER12C_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "twitch",
+		"ProductId": "EXPD_POSTER12C"
+	},
+	{
+		"Id": "^TWITCH_410",
+		"Name": "Meditation Poster",
+		"Name_LocStr": "BLD_EXPD_POSTER13A_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "twitch",
+		"ProductId": "EXPD_POSTER13A"
+	},
+	{
+		"Id": "^TWITCH_411",
+		"Name": "Atlas Firework Pack",
+		"Name_LocStr": "UI_FIREWORK_PACK_EXPD_01_NAME",
+		"Subtitle_LocStr": "BLD_FIREWORK_PACK_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_FIREW13A"
+	},
+	{
+		"Id": "^TWITCH_412",
+		"Name": "Atlas Firework Pack",
+		"Name_LocStr": "UI_FIREWORK_PACK_EXPD_01_NAME",
+		"Subtitle_LocStr": "BLD_FIREWORK_PACK_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_FIREW13B"
+	},
+	{
+		"Id": "^TWITCH_413",
+		"Name": "Atlas Firework Pack",
+		"Name_LocStr": "UI_FIREWORK_PACK_EXPD_01_NAME",
+		"Subtitle_LocStr": "BLD_FIREWORK_PACK_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_FIREW13C"
+	},
+	{
+		"Id": "^TWITCH_414",
+		"Name": "Atlas Firework Pack",
+		"Name_LocStr": "UI_FIREWORK_PACK_EXPD_01_NAME",
+		"Subtitle_LocStr": "BLD_FIREWORK_PACK_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_FIREW13D"
+	},
+	{
+		"Id": "^TWITCH_415",
+		"Name": "Atlas Firework Pack",
+		"Name_LocStr": "UI_FIREWORK_PACK_EXPD_01_NAME",
+		"Subtitle_LocStr": "BLD_FIREWORK_PACK_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_FIREW13E"
+	},
+	{
+		"Id": "^TWITCH_416",
+		"Name": "Floating Tassel Lily",
+		"Name_LocStr": "BLD_FLYINGFERN_NAME",
+		"Subtitle_LocStr": "BLD_FLORA_SUB",
+		"Category": "twitch",
+		"ProductId": "BASE_FLYINGFERN"
+	},
+	{
+		"Id": "^TWITCH_417",
+		"Name": "Industrial Crane",
+		"Name_LocStr": "BLD_CRANE_NAME",
+		"Subtitle_LocStr": "BLD_DECOR_SUBTITLE",
+		"Category": "twitch",
+		"ProductId": "BLD_CRANE"
+	},
+	{
+		"Id": "^TWITCH_418",
+		"Name": "Ice Diplo Statue",
+		"Name_LocStr": "BLD_DIP_ICE_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_STATUE_SUB",
+		"Category": "twitch",
+		"ProductId": "STATUE_DIP_I"
+	},
+	{
+		"Id": "^TWITCH_419",
+		"Name": "Closed Seed Cone",
+		"Name_LocStr": "BLD_SUBZPLANT_1_NAME",
+		"Subtitle_LocStr": "BLD_FLORA_SUB",
+		"Category": "twitch",
+		"ProductId": "BASE_SUBZPLANT1"
+	},
+	{
+		"Id": "^TWITCH_420",
+		"Name": "Sprig Bush",
+		"Name_LocStr": "BLD_SPRIGBUSH_NAME",
+		"Subtitle_LocStr": "BLD_FLORA_SUB",
+		"Category": "twitch",
+		"ProductId": "BASE_SPRIGBUSH"
+	},
+	{
+		"Id": "^TWITCH_421",
+		"Name": "Fearsome Visor",
+		"Name_LocStr": "UI_SPEC_BUCKETHELM_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_HAT_SUB",
+		"Category": "twitch",
+		"ProductId": "SPEC_BUCKETHELM"
+	},
+	{
+		"Id": "^TWITCH_422",
+		"Name": "Liquidator Right Arm",
+		"Name_LocStr": "UI_MECH_ARMY_R_ARM_NAME",
+		"Subtitle_LocStr": "UI_MECH_ARMY_SUB",
+		"Category": "twitch",
+		"ProductId": "BUGMECH_ARMR"
+	},
+	{
+		"Id": "^TWITCH_423",
+		"Name": "Hadal Freighter Trail",
+		"Name_LocStr": "UI_FREI_TRAIL_TUR_NAME",
+		"Subtitle_LocStr": "UI_FREI_TRAIL_SUB",
+		"Category": "twitch",
+		"ProductId": "FREI_TRAIL_TUR"
+	},
+	{
+		"Id": "^TWITCH_424",
+		"Name": "Tentacled Cape",
+		"Name_LocStr": "UI_CAPE_JELLY_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_CAPE_SUB",
+		"Category": "twitch",
+		"ProductId": "CAPE_JELLY"
+	},
+	{
+		"Id": "^TWITCH_425",
+		"Name": "Plasma Jetpack Trail",
+		"Name_LocStr": "UI_JETTRAIL_PLASMA_NAME",
+		"Subtitle_LocStr": "UI_JETTRAIL_SUB",
+		"Category": "twitch",
+		"ProductId": "JETS_PLASMA"
+	},
+	{
+		"Id": "^TWITCH_426",
+		"Name": "Memories of the Ancients",
+		"Name_LocStr": "UI_TWIT_GUN_31_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_GUN_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_GUN31"
+	},
+	{
+		"Id": "^TWITCH_427",
+		"Name": "Improvised Ion Generator",
+		"Name_LocStr": "UI_TWIT_GUN_32_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_GUN_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_GUN32"
+	},
+	{
+		"Id": "^TWITCH_428",
+		"Name": "X. Spellristreus Egg",
+		"Name_LocStr": "UI_TWIT_PET_26_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_PET_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_PET26"
+	},
+	{
+		"Id": "^TWITCH_429",
+		"Name": "Silent Shock Injector",
+		"Name_LocStr": "UI_TWIT_GUN_33_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_GUN_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_GUN33"
+	},
+	{
+		"Id": "^TWITCH_430",
+		"Name": "N. Heydroadrus Egg",
+		"Name_LocStr": "UI_TWIT_PET_27_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_PET_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_PET27"
+	},
+	{
+		"Id": "^TWITCH_431",
+		"Name": "Wk5 Mimar",
+		"Name_LocStr": "UI_TWIT_SHIP_61_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_SHIP61"
+	},
+	{
+		"Id": "^TWITCH_432",
+		"Name": "Ratsu's Prospect",
+		"Name_LocStr": "UI_TWIT_SHIP_62_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_SHIP62"
+	},
+	{
+		"Id": "^TWITCH_433",
+		"Name": "Unjiwua's Voyage Lo5",
+		"Name_LocStr": "UI_TWIT_SHIP_63_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_SHIP63"
+	},
+	{
+		"Id": "^TWITCH_434",
+		"Name": "Mookaw Ni8",
+		"Name_LocStr": "UI_TWIT_SHIP_64_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_SHIP64"
+	},
+	{
+		"Id": "^TWITCH_435",
+		"Name": "Halcyon Dance Vq6",
+		"Name_LocStr": "UI_TWIT_SHIP_65_NAME",
+		"Subtitle_LocStr": "UI_SPECIAL_SHIP_SUB",
+		"Category": "twitch",
+		"ProductId": "TWITCH_SHIP65"
 	},
 	{
 		"Id": "^TWITCH_376",

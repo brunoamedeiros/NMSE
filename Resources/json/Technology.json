@@ -5747,9 +5747,9 @@
 		],
 		"StatBonuses": [
 			{
-				"Name": "Unspecified",
+				"Name": "Freighter Fleet Boost",
 				"LocaleKeyTemplate": "enabled",
-				"Image": "enabled",
+				"Image": "boost",
 				"Value": "1"
 			}
 		],

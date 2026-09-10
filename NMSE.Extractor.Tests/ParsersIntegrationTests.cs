@@ -5,6 +5,28 @@ namespace NMSE.Extractor.Tests;
 
 public class ParsersIntegrationTests
 {
+    [Fact]
+    public void Translate_ResolvesMixedCaseCosmosReference()
+    {
+        string tmpDir = CreateTempDir();
+        try
+        {
+            string jsonDir = Path.Combine(tmpDir, ExtractorConfig.JsonSubfolder);
+            Directory.CreateDirectory(Path.Combine(jsonDir, "lang"));
+            File.WriteAllText(Path.Combine(jsonDir, "lang", "en-GB.json"),
+                "{\"BLD_BIG_MAG_1X1_NAME\":\"Tractor Beam\"}");
+            MxmlParser.ClearLocalisationCache();
+            MxmlParser.LoadLocalisation(jsonDir);
+
+            Assert.Equal("Tractor Beam", MxmlParser.Translate("BLD_BIG_MAG_1x1_NAME"));
+        }
+        finally
+        {
+            MxmlParser.ClearLocalisationCache();
+            Directory.Delete(tmpDir, recursive: true);
+        }
+    }
+
     private string CreateTempDir()
     {
         string dir = Path.Combine(Path.GetTempPath(), $"nmse_parser_test_{Guid.NewGuid():N}");
