@@ -404,6 +404,7 @@ public partial class MainFormResources : Form
         toolsMenu.DropDownItems.Add(new ToolStripMenuItem("Refill All Stacks", null, OnToolsRefillAllStacks) { Enabled = false });
         toolsMenu.DropDownItems.Add(new ToolStripMenuItem("Repair All Slots", null, OnToolsRepairAllSlots) { Enabled = false });
         toolsMenu.DropDownItems.Add(new ToolStripMenuItem("Repair All Technology", null, OnToolsRepairAllTech) { Enabled = false });
+        AddPersonalTools(toolsMenu);
         _menuStrip.Items.Add(toolsMenu);
 
         // Language menu (between Tools and Help)
@@ -1655,6 +1656,7 @@ public partial class MainFormResources : Form
                 // already include panel side changes, causing "Show Changes" to miss
 				// them in the diff.
                 _rawJsonPanel.CaptureBaseline(_currentSaveData);
+                CaptureSummaryBaseline();
 
                 // Load only the currently selected tab (other tabs loaded on first selection)
                 activeContent?.SuspendLayout();
@@ -1967,6 +1969,7 @@ public partial class MainFormResources : Form
                 _rawJsonPanel.SetAccountData(_accountPanel.AccountData, _accountPanel.AccountFilePath);
                 // Capture the diff baseline before any panel LoadData is called (see LoadSaveData).
                 _rawJsonPanel.CaptureBaseline(_currentSaveData);
+                CaptureSummaryBaseline();
                 activeContent?.SuspendLayout();
                 try
                 {
@@ -2040,6 +2043,7 @@ public partial class MainFormResources : Form
                 _rawJsonPanel.SetAccountData(_accountPanel.AccountData, _accountPanel.AccountFilePath);
                 // Capture the diff baseline before any panel LoadData is called (see LoadSaveData).
                 _rawJsonPanel.CaptureBaseline(_currentSaveData);
+                CaptureSummaryBaseline();
                 activeContent?.SuspendLayout();
                 try
                 {
@@ -2106,6 +2110,7 @@ public partial class MainFormResources : Form
 
     private void OnSave(object? sender, EventArgs e)
     {
+        _lastSaveSucceeded = false;
         if (_currentSaveData == null || _currentFilePath == null) return;
 
         try
@@ -2118,6 +2123,7 @@ public partial class MainFormResources : Form
             SyncAllPanelData();
 
             // Backup the save directory before writing (always, not just when changes detected)
+            if (!ReviewBeforeSave()) return;
             string backupRoot = "";
             string? saveDir = Path.GetDirectoryName(_currentFilePath);
             if (saveDir != null)
@@ -2164,6 +2170,8 @@ public partial class MainFormResources : Form
                     ? UiStrings.Format("status.save_written", Path.GetFileName(_xboxContainersIndexPath))
                     : UiStrings.Format("status.save_written_with_backup", Path.GetFileName(_xboxContainersIndexPath), backupRoot);
                 _hasUnsavedChanges = false;
+                CaptureSummaryBaseline();
+                _lastSaveSucceeded = true;
                 MessageBox.Show(this, UiStrings.Get("dialog.save_success"), UiStrings.Get("dialog.success"),
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -2200,6 +2208,8 @@ public partial class MainFormResources : Form
                     ? UiStrings.Format("status.save_written", Path.GetFileName(_currentFilePath))
                     : UiStrings.Format("status.save_written_with_backup", Path.GetFileName(_currentFilePath), backupRoot);
                 _hasUnsavedChanges = false;
+                CaptureSummaryBaseline();
+                _lastSaveSucceeded = true;
                 MessageBox.Show(this, UiStrings.Get("dialog.save_success"), UiStrings.Get("dialog.success"),
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -2234,6 +2244,8 @@ public partial class MainFormResources : Form
                 ? UiStrings.Format("status.save_written", Path.GetFileName(_currentFilePath!))
                 : UiStrings.Format("status.save_written_with_backup", Path.GetFileName(_currentFilePath!), backupRoot);
             _hasUnsavedChanges = false;
+            CaptureSummaryBaseline();
+            _lastSaveSucceeded = true;
             UpdateCurrentSlotLabel();
             MessageBox.Show(this, UiStrings.Get("dialog.save_success"), UiStrings.Get("dialog.success"),
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2257,8 +2269,10 @@ public partial class MainFormResources : Form
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
+            string? previousPath = _currentFilePath;
             _currentFilePath = dialog.FileName;
             OnSave(sender, e);
+            if (!_lastSaveSucceeded) _currentFilePath = previousPath;
         }
     }
 
@@ -2929,6 +2943,7 @@ public partial class MainFormResources : Form
                     toolsMenu.DropDownItems[6].Text = UiStrings.Get("menu.tools.repair_all_tech");
                 }
             }
+            LocalisePersonalTools();
             // Language (use stored field reference, BCP 47 tags stay as-is)
             _languageMenu.Text = UiStrings.Get("menu.language");
             // Theme (localised labels + checked state for current selection)
@@ -3453,8 +3468,6 @@ public partial class MainFormResources : Form
 
     private void OnFormClosing(object? sender, FormClosingEventArgs e)
     {
-        SaveContext.Reset();
-
         // Prompt if there are unsaved changes
         if (_hasUnsavedChanges && _currentSaveData != null)
         {
@@ -3467,6 +3480,11 @@ public partial class MainFormResources : Form
             if (result == DialogResult.Yes)
             {
                 OnSave(this, EventArgs.Empty);
+                if (!_lastSaveSucceeded)
+                {
+                    e.Cancel = true;
+                    return;
+                }
             }
             else if (result == DialogResult.Cancel)
             {
@@ -3475,6 +3493,7 @@ public partial class MainFormResources : Form
             }
         }
 
+        SaveContext.Reset();
         var config = AppConfig.Instance;
         if (WindowState == FormWindowState.Normal)
         {

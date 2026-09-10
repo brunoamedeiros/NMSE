@@ -109,6 +109,9 @@
     <Compile Include="..\Core\Utilities\NmsColourPalette.cs" Link="Core\Utilities\NmsColourPalette.cs" />
     <Compile Include="..\Core\Utilities\RawNumberGuard.cs" Link="Core\Utilities\RawNumberGuard.cs" />
     <Compile Include="..\Core\InventoryBulkActions.cs" Link="Core\InventoryBulkActions.cs" />
+    <Compile Include="..\Core\InventorySearchLogic.cs" Link="Core\InventorySearchLogic.cs" />
+    <Compile Include="..\Core\HotkeyLogic.cs" Link="Core\HotkeyLogic.cs" />
+    <Compile Include="..\Core\ChangeSummaryLogic.cs" Link="Core\ChangeSummaryLogic.cs" />
     <Compile Include="..\Core\SaveContext.cs" Link="Core\SaveContext.cs" />
   </ItemGroup>
 
