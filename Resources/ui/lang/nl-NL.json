@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "POI-gegevens",
   "discovery.delete_poi_single": "Weet je zeker dat je deze ontdekking in de diepe ruimte wilt verwijderen?",
   "discovery.delete_poi_multi": "Weet je zeker dat je {0} ontdekkingen in de diepe ruimte wilt verwijderen?",
-  "discovery.delete_poi_title": "Ontdekking verwijderen"
+  "discovery.delete_poi_title": "Ontdekking verwijderen",
+  "raw_json.view_selected": "Geselecteerde JSON bekijken...",
+  "raw_json.selected_title": "Geselecteerde JSON",
+  "raw_json.selected_read_only": "Alleen-lezenvoorbeeld"
 }

@@ -1353,6 +1353,7 @@ public partial class RawJsonPanel : UserControl
         _contextMenu.Items[5].Visible = !isRoot;     // Delete
         _contextMenu.Items[11].Visible = hasNode;    // Export Node
         _contextMenu.Items[12].Visible = hasParent;  // Import Node (needs parent to replace into)
+        _viewSelectedJsonItem.Enabled = hasNode;
     }
 
     #endregion
@@ -2554,6 +2555,7 @@ public partial class RawJsonPanel : UserControl
         _exportButton.Text = UiStrings.Get("raw_json.export");
         _importButton.Text = UiStrings.Get("raw_json.import");
         _diffButton.Text = UiStrings.Get("raw_json.diff");
+        _viewSelectedJsonItem.Text = UiStrings.Get("raw_json.view_selected");
 
         // Context menu items (by position, skipping separators)
         if (_contextMenu.Items.Count >= 13)

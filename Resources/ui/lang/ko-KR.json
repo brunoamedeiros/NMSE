@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "POI 데이터",
   "discovery.delete_poi_single": "이 심우주 발견을 삭제하시겠습니까?",
   "discovery.delete_poi_multi": "심우주 발견 {0}개를 삭제하시겠습니까?",
-  "discovery.delete_poi_title": "발견 삭제"
+  "discovery.delete_poi_title": "발견 삭제",
+  "raw_json.view_selected": "선택한 JSON 보기...",
+  "raw_json.selected_title": "선택한 JSON",
+  "raw_json.selected_read_only": "읽기 전용 미리보기"
 }

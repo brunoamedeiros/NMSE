@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "Datos del PDI",
   "discovery.delete_poi_single": "¿Seguro que quieres eliminar este descubrimiento del espacio profundo?",
   "discovery.delete_poi_multi": "¿Seguro que quieres eliminar {0} descubrimientos del espacio profundo?",
-  "discovery.delete_poi_title": "Eliminar descubrimiento"
+  "discovery.delete_poi_title": "Eliminar descubrimiento",
+  "raw_json.view_selected": "Ver JSON seleccionado...",
+  "raw_json.selected_title": "JSON seleccionado",
+  "raw_json.selected_read_only": "Vista previa de solo lectura"
 }

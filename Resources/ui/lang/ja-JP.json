@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "POI データ",
   "discovery.delete_poi_single": "この深宇宙の発見を削除してもよろしいですか？",
   "discovery.delete_poi_multi": "{0} 件の深宇宙の発見を削除してもよろしいですか？",
-  "discovery.delete_poi_title": "発見を削除"
+  "discovery.delete_poi_title": "発見を削除",
+  "raw_json.view_selected": "選択したJSONを表示...",
+  "raw_json.selected_title": "選択したJSON",
+  "raw_json.selected_read_only": "読み取り専用プレビュー"
 }

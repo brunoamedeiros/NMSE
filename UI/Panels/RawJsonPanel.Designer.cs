@@ -165,6 +165,10 @@ partial class RawJsonPanel
         _treeView.BeforeExpand += OnBeforeExpand;
         _treeView.KeyDown += OnTreeKeyDown;
         _treeView.AfterSelect += OnTreeNodeSelected;
+        _treeView.NodeMouseClick += (_, e) =>
+        {
+            if (e.Button == MouseButtons.Right) _treeView.SelectedNode = e.Node;
+        };
         _treeView.ItemDrag += OnTreeItemDrag;
         _treeView.DragOver += OnTreeDragOver;
         _treeView.DragDrop += OnTreeDragDrop;
@@ -183,6 +187,9 @@ partial class RawJsonPanel
         _contextMenu.Items.Add(new ToolStripSeparator());
         _contextMenu.Items.Add("Export Node...", null, (_, _) => ExportSelectedNode());
         _contextMenu.Items.Add("Import Node...", null, (_, _) => ImportSelectedNode());
+        _contextMenu.Items.Add(new ToolStripSeparator());
+        _viewSelectedJsonItem = new ToolStripMenuItem("View Selected JSON...", null, (_, _) => ShowSelectedJson());
+        _contextMenu.Items.Add(_viewSelectedJsonItem);
         _contextMenu.Opening += OnContextMenuOpening;
         _treeView.ContextMenuStrip = _contextMenu;
 
@@ -274,6 +281,7 @@ partial class RawJsonPanel
     private TreeView _splitTreeView = null!;
     private JsonSyntaxTextBox _splitSyntaxTextBox = null!;
     private ContextMenuStrip _contextMenu = null!;
+    private ToolStripMenuItem _viewSelectedJsonItem = null!;
     private ComboBox _fileSelector = null!;
     private Button _stopExpandBtn = null!;
     private Button _searchBackButton = null!;

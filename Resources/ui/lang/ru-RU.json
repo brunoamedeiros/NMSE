@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "Данные POI",
   "discovery.delete_poi_single": "Вы действительно хотите удалить это открытие в глубоком космосе?",
   "discovery.delete_poi_multi": "Вы действительно хотите удалить {0} открытий в глубоком космосе?",
-  "discovery.delete_poi_title": "Удалить открытие"
+  "discovery.delete_poi_title": "Удалить открытие",
+  "raw_json.view_selected": "Показать выбранный JSON...",
+  "raw_json.selected_title": "Выбранный JSON",
+  "raw_json.selected_read_only": "Просмотр без редактирования"
 }

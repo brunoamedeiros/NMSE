@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "POI-Daten",
   "discovery.delete_poi_single": "Möchten Sie diese Tiefraum-Entdeckung wirklich löschen?",
   "discovery.delete_poi_multi": "Möchten Sie {0} Tiefraum-Entdeckungen wirklich löschen?",
-  "discovery.delete_poi_title": "Entdeckung löschen"
+  "discovery.delete_poi_title": "Entdeckung löschen",
+  "raw_json.view_selected": "Ausgewähltes JSON anzeigen...",
+  "raw_json.selected_title": "Ausgewähltes JSON",
+  "raw_json.selected_read_only": "Schreibgeschützte Vorschau"
 }

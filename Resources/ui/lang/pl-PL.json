@@ -2113,5 +2113,8 @@
   "discovery.col_poi_data": "Dane POI",
   "discovery.delete_poi_single": "Czy na pewno chcesz usunąć to odkrycie w głębokim kosmosie?",
   "discovery.delete_poi_multi": "Czy na pewno chcesz usunąć {0} odkryć w głębokim kosmosie?",
-  "discovery.delete_poi_title": "Usuń odkrycie"
+  "discovery.delete_poi_title": "Usuń odkrycie",
+  "raw_json.view_selected": "Pokaż wybrany JSON...",
+  "raw_json.selected_title": "Wybrany JSON",
+  "raw_json.selected_read_only": "Podgląd tylko do odczytu"
 }
