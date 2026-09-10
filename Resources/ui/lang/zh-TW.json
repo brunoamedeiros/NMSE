@@ -2105,5 +2105,16 @@
   "theme_dark": "深色",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "深空",
+  "discovery.deep_space_hint": "在深空中發現的興趣點（Cosmos 7.0）。刪除項目會將該地點標記為未發現。",
+  "discovery.deep_space_slots": "已使用 {0} / {1} 個發現欄位",
+  "discovery.deep_space_unavailable": "此存檔不包含深空發現資料（需要 Cosmos 7.0 或更新版本）。",
+  "discovery.col_poi_data": "POI 資料",
+  "discovery.delete_poi_single": "確定要刪除此深空發現嗎？",
+  "discovery.delete_poi_multi": "確定要刪除 {0} 個深空發現嗎？",
+  "discovery.delete_poi_title": "刪除發現",
+  "raw_json.view_selected": "檢視選取的 JSON...",
+  "raw_json.selected_title": "選取的 JSON",
+  "raw_json.selected_read_only": "唯讀預覽"
 }

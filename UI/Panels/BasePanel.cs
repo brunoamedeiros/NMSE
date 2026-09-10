@@ -55,6 +55,12 @@ public partial class BasePanel : UserControl
         _chestsSubPanel.SaveData(saveData);
     }
 
+    internal void PrepareInventorySearch(JsonObject inventory)
+    {
+        _chestsSubPanel.PrepareInventorySearch(inventory);
+        _storageSubPanel.PrepareInventorySearch(inventory);
+    }
+
     public void ApplyUiLocalisation()
     {
         _basesPage.Text = UiStrings.Get("base.tab_bases");
@@ -2850,6 +2856,14 @@ internal class ChestsSubPanel : UserControl
         PerformLayout();
     }
 
+    internal void PrepareInventorySearch(JsonObject inventory)
+    {
+        int idx = Array.FindIndex(_pendingInventories, candidate => ReferenceEquals(candidate, inventory));
+        if (idx < 0) return;
+        _storageTabs.SelectedIndex = idx;
+        EnsureActiveTabLoaded();
+    }
+
     private void RenameChest(int idx)
     {
         string newName = _chestNameFields[idx].Text.Trim();
@@ -3191,6 +3205,14 @@ internal class StorageSubPanel : UserControl
         Controls.Add(_storageTabs);
         ResumeLayout(false);
         PerformLayout();
+    }
+
+    internal void PrepareInventorySearch(JsonObject inventory)
+    {
+        int idx = _tabs.FindIndex(tab => ReferenceEquals(tab.PendingInventory, inventory));
+        if (idx < 0) return;
+        _storageTabs.SelectedIndex = idx;
+        EnsureActiveTabLoaded();
     }
 
     private void EnsureActiveTabLoaded()

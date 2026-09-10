@@ -2105,5 +2105,16 @@
   "theme_dark": "Тёмная",
   "slot.expedition": "Expedition",
   "player.expedition_number": "Expedition Number:",
-  "player.expedition_format": "Season {0}"
+  "player.expedition_format": "Season {0}",
+  "discovery.tab_deep_space": "Глубокий космос",
+  "discovery.deep_space_hint": "Точки интереса, обнаруженные в глубоком космосе (Cosmos 7.0). Удаление записи помечает место как неоткрытое.",
+  "discovery.deep_space_slots": "Использовано {0} из {1} ячеек открытий",
+  "discovery.deep_space_unavailable": "Это сохранение не содержит данных об открытиях в глубоком космосе (требуется Cosmos 7.0 или новее).",
+  "discovery.col_poi_data": "Данные POI",
+  "discovery.delete_poi_single": "Вы действительно хотите удалить это открытие в глубоком космосе?",
+  "discovery.delete_poi_multi": "Вы действительно хотите удалить {0} открытий в глубоком космосе?",
+  "discovery.delete_poi_title": "Удалить открытие",
+  "raw_json.view_selected": "Показать выбранный JSON...",
+  "raw_json.selected_title": "Выбранный JSON",
+  "raw_json.selected_read_only": "Просмотр без редактирования"
 }

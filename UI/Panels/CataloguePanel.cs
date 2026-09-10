@@ -162,6 +162,7 @@ public partial class CataloguePanel : UserControl
         LoadKnownWords(playerState);
         LoadKnownGlyphs(playerState);
         LoadKnownLocations(playerState);
+        LoadSpacePoiDiscoveries(playerState);
         LoadKnownFish(playerState);
         LoadKnownRecipes(playerState);
         }
@@ -205,6 +206,7 @@ public partial class CataloguePanel : UserControl
         _specialsGrid.Rows.Clear();
         _wordGrid.Rows.Clear();
         _locationsGrid.Rows.Clear();
+        _poiGrid.Rows.Clear();
         _fishGrid.Rows.Clear();
         _recipeGrid.Rows.Clear();
 
@@ -220,6 +222,7 @@ public partial class CataloguePanel : UserControl
         _savedPlayerState = null;
         _knownWordGroups = null;
         _teleportEndpoints = null;
+        _spacePoiDiscoveries = null;
         _fishingRecord = null;
     }
 
@@ -855,6 +858,7 @@ public partial class CataloguePanel : UserControl
     // --- Tab 5: Known Locations ---
 
     private JsonArray? _teleportEndpoints;
+    private JsonArray? _spacePoiDiscoveries;
     private JsonObject? _savedPlayerState;
     private JsonObject? _savedSaveData;
 
@@ -974,10 +978,118 @@ public partial class CataloguePanel : UserControl
     private void OnLocationGalaxyCellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-        if (_locationsGrid.Columns[e.ColumnIndex].Name != "Galaxy") return;
+        var grid = sender as DataGridView ?? _locationsGrid;
+        if (grid.Columns[e.ColumnIndex].Name != "Galaxy") return;
 
-        int realityIndex = _locationsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Tag is int ri ? ri : 0;
+        int realityIndex = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Tag is int ri ? ri : 0;
         GalaxyDisplayHelper.PaintGalaxyCell(e, e.Value?.ToString() ?? string.Empty, realityIndex);
+    }
+
+    // ------------------------------------------------------------------
+    // Deep Space Discoveries (Cosmos 7.0 space POIs)
+    // ------------------------------------------------------------------
+
+    private void LoadSpacePoiDiscoveries(JsonObject playerState)
+    {
+        _poiGrid.SuspendLayout();
+        try
+        {
+            _poiGrid.Rows.Clear();
+            _spacePoiDiscoveries = null;
+            try
+            {
+                _spacePoiDiscoveries = playerState.GetArray(SpacePoiLogic.DiscoveriesKey);
+            }
+            catch { }
+
+            if (_spacePoiDiscoveries == null)
+            {
+                _poiCountLabel.Text = UiStrings.Get("discovery.deep_space_unavailable");
+                _deletePoiBtn.Enabled = false;
+                return;
+            }
+            _deletePoiBtn.Enabled = true;
+
+            var populated = SpacePoiLogic.GetPopulatedIndices(_spacePoiDiscoveries);
+            var rowList = new List<DataGridViewRow>(populated.Count);
+            foreach (int i in populated)
+            {
+                try
+                {
+                    var slot = _spacePoiDiscoveries.GetObject(i);
+                    long ua = SpacePoiLogic.ReadUA(slot);
+                    var addr = SpacePoiLogic.UnpackUniverseAddress(ua);
+
+                    string galaxyType = GalaxyDatabase.GetGalaxyType(addr.RealityIndex);
+                    string galaxyName = $"{GalaxyDatabase.GetGalaxyDisplayName(addr.RealityIndex)} ({galaxyType})";
+                    string portalCode = CoordinateHelper.VoxelToPortalCode(addr.VoxelX, addr.VoxelY, addr.VoxelZ, addr.SolarSystemIndex, addr.PlanetIndex);
+                    string signalBooster = CoordinateHelper.VoxelToSignalBooster(addr.VoxelX, addr.VoxelY, addr.VoxelZ, addr.SolarSystemIndex);
+                    long d0 = SpacePoiLogic.ReadPacked(slot, SpacePoiLogic.PackedData0Key);
+                    long d1 = SpacePoiLogic.ReadPacked(slot, SpacePoiLogic.PackedData1Key);
+                    string poiData = $"0x{d0:X} / 0x{d1:X}";
+
+                    var row = new DataGridViewRow();
+                    row.CreateCells(_poiGrid, i, galaxyName, portalCode, CoordinateHelper.PortalHexToDec(portalCode), signalBooster, poiData);
+                    row.Cells[1].Tag = addr.RealityIndex;
+                    row.Tag = i; // array slot index
+                    rowList.Add(row);
+                }
+                catch { }
+            }
+            _poiGrid.Rows.AddRange(rowList.ToArray());
+            UpdateSpacePoiCountLabel();
+        }
+        finally
+        {
+            _poiGrid.ResumeLayout(true);
+        }
+    }
+
+    private void UpdateSpacePoiCountLabel()
+    {
+        if (_spacePoiDiscoveries == null) return;
+        _poiCountLabel.Text = UiStrings.Format("discovery.deep_space_slots", _poiGrid.Rows.Count, _spacePoiDiscoveries.Length);
+    }
+
+    private void OnSpacePoiSelectionChanged(object? sender, EventArgs e)
+    {
+        if (_poiGrid.SelectedRows.Count == 0)
+        {
+            CoordinateHelper.UpdateGlyphPanel(_poiGlyphPanel, "");
+            _poiGalaxyLabel.Text = "";
+            return;
+        }
+
+        var row = _poiGrid.SelectedRows[0];
+        string portalCode = row.Cells["PortalCode"].Value?.ToString() ?? "";
+        CoordinateHelper.UpdateGlyphPanel(_poiGlyphPanel, portalCode);
+        _poiGalaxyLabel.Text = row.Cells["Galaxy"].Value?.ToString() ?? "";
+    }
+
+    private void DeleteSpacePoi_Click(object? sender, EventArgs e)
+    {
+        if (_spacePoiDiscoveries == null || _savedPlayerState == null || _poiGrid.SelectedRows.Count == 0) return;
+
+        int count = _poiGrid.SelectedRows.Count;
+        string msg = count == 1
+            ? UiStrings.Get("discovery.delete_poi_single")
+            : UiStrings.Format("discovery.delete_poi_multi", count);
+        var result = MessageBox.Show(this, msg, UiStrings.Get("discovery.delete_poi_title"),
+            MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        if (result != DialogResult.Yes) return;
+
+        var slotIndices = new List<int>();
+        foreach (DataGridViewRow row in _poiGrid.SelectedRows)
+        {
+            if (row.Tag is int slotIdx)
+                slotIndices.Add(slotIdx);
+        }
+
+        SpacePoiLogic.RemoveSlots(_savedPlayerState, _spacePoiDiscoveries, slotIndices);
+
+        // Compaction changes slot indices, so rebuild the grid from the array
+        LoadSpacePoiDiscoveries(_savedPlayerState);
+        RaiseDataModified();
     }
 
     private void DeleteLocation_Click(object? sender, EventArgs e)
@@ -1941,7 +2053,7 @@ public partial class CataloguePanel : UserControl
     public void ApplyUiLocalisation()
     {
         // Tab pages
-        if (_tabControl.TabPages.Count >= 8)
+        if (_tabControl.TabPages.Count >= 9)
         {
             _tabControl.TabPages[0].Text = UiStrings.Get("discovery.tab_tech");
             _tabControl.TabPages[1].Text = UiStrings.Get("discovery.tab_products");
@@ -1949,8 +2061,9 @@ public partial class CataloguePanel : UserControl
             _tabControl.TabPages[3].Text = UiStrings.Get("discovery.tab_words");
             _tabControl.TabPages[4].Text = UiStrings.Get("discovery.tab_glyphs");
             _tabControl.TabPages[5].Text = UiStrings.Get("discovery.tab_locations");
-            _tabControl.TabPages[6].Text = UiStrings.Get("discovery.tab_fish");
-            _tabControl.TabPages[7].Text = UiStrings.Get("discovery.tab_recipes");
+            _tabControl.TabPages[6].Text = UiStrings.Get("discovery.tab_deep_space");
+            _tabControl.TabPages[7].Text = UiStrings.Get("discovery.tab_fish");
+            _tabControl.TabPages[8].Text = UiStrings.Get("discovery.tab_recipes");
         }
 
         // Buttons
@@ -1973,6 +2086,11 @@ public partial class CataloguePanel : UserControl
 
         _deleteLocationBtn.Text = UiStrings.Get("discovery.delete_selected");
         _travelToBtn.Text = UiStrings.Get("discovery.travel_to_system");
+        _deletePoiBtn.Text = UiStrings.Get("discovery.delete_selected");
+        _poiHintLabel.Text = UiStrings.Get("discovery.deep_space_hint");
+        _poiGlyphsCaptionLabel.Text = UiStrings.Get("discovery.portal_glyphs");
+        _poiGalaxyCaptionLabel.Text = UiStrings.Get("discovery.galaxy");
+        UpdateSpacePoiCountLabel();
         _addFishBtn.Text = UiStrings.Get("discovery.add_fish_title");
         _removeFishBtn.Text = UiStrings.Get("discovery.remove_selected");
 
@@ -2016,6 +2134,14 @@ public partial class CataloguePanel : UserControl
         if (_locationsGrid.Columns["PortalCode"] is DataGridViewColumn lPC) lPC.HeaderText = UiStrings.Get("discovery.col_portal_hex");
         if (_locationsGrid.Columns["PortalCodeDec"] is DataGridViewColumn lPD) lPD.HeaderText = UiStrings.Get("discovery.col_portal_dec");
         if (_locationsGrid.Columns["SignalBooster"] is DataGridViewColumn lSB) lSB.HeaderText = UiStrings.Get("discovery.col_signal_booster");
+
+        // Deep space grid columns
+        if (_poiGrid.Columns["Index"] is DataGridViewColumn dIdx) dIdx.HeaderText = UiStrings.Get("discovery.col_index");
+        if (_poiGrid.Columns["Galaxy"] is DataGridViewColumn dGal) dGal.HeaderText = UiStrings.Get("discovery.col_galaxy");
+        if (_poiGrid.Columns["PortalCode"] is DataGridViewColumn dPC) dPC.HeaderText = UiStrings.Get("discovery.col_portal_hex");
+        if (_poiGrid.Columns["PortalCodeDec"] is DataGridViewColumn dPD) dPD.HeaderText = UiStrings.Get("discovery.col_portal_dec");
+        if (_poiGrid.Columns["SignalBooster"] is DataGridViewColumn dSB) dSB.HeaderText = UiStrings.Get("discovery.col_signal_booster");
+        if (_poiGrid.Columns["PoiData"] is DataGridViewColumn dPoi) dPoi.HeaderText = UiStrings.Get("discovery.col_poi_data");
 
         // Fish grid columns
         if (_fishGrid.Columns["CaughtFish"] is DataGridViewColumn fCaught) fCaught.HeaderText = UiStrings.Get("discovery.col_caught_fish");

@@ -90,6 +90,7 @@
     <Compile Include="..\Core\CompanionLogic.cs" Link="Core\CompanionLogic.cs" />
     <Compile Include="..\Core\MilestoneLogic.cs" Link="Core\MilestoneLogic.cs" />
     <Compile Include="..\Core\CatalogueLogic.cs" Link="Core\CatalogueLogic.cs" />
+    <Compile Include="..\Core\SpacePoiLogic.cs" Link="Core\SpacePoiLogic.cs" />
     <Compile Include="..\Core\BaseLogic.cs" Link="Core\BaseLogic.cs" />
     <Compile Include="..\Core\SettlementLogic.cs" Link="Core\SettlementLogic.cs" />
     <Compile Include="..\Core\SquadronLogic.cs" Link="Core\SquadronLogic.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="..\Core\Utilities\NmsColourPalette.cs" Link="Core\Utilities\NmsColourPalette.cs" />
     <Compile Include="..\Core\Utilities\RawNumberGuard.cs" Link="Core\Utilities\RawNumberGuard.cs" />
     <Compile Include="..\Core\InventoryBulkActions.cs" Link="Core\InventoryBulkActions.cs" />
+    <Compile Include="..\Core\InventorySearchLogic.cs" Link="Core\InventorySearchLogic.cs" />
+    <Compile Include="..\Core\HotkeyLogic.cs" Link="Core\HotkeyLogic.cs" />
+    <Compile Include="..\Core\ChangeSummaryLogic.cs" Link="Core\ChangeSummaryLogic.cs" />
     <Compile Include="..\Core\SaveContext.cs" Link="Core\SaveContext.cs" />
   </ItemGroup>
 
