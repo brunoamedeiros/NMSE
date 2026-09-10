@@ -8709,7 +8709,7 @@
 				"Name": "Suit Armour Shield Strength",
 				"ValueMin": 0.1,
 				"ValueMax": 0.35,
-				"WeightingCurve": "MinIsUncommon",
+				"WeightingCurve": "MaxIsUncommon",
 				"AlwaysChoose": false
 			},
 			{
@@ -8781,7 +8781,7 @@
 				"Name": "Suit Armour Shield Strength",
 				"ValueMin": 0.1,
 				"ValueMax": 0.35,
-				"WeightingCurve": "MinIsUncommon",
+				"WeightingCurve": "MaxIsUncommon",
 				"AlwaysChoose": false
 			},
 			{
@@ -13936,8 +13936,8 @@
 			{
 				"StatType": "Freighter_Fleet_Fuel",
 				"Name": "Freighter Fleet Fuel",
-				"ValueMin": 0.99,
-				"ValueMax": 0.95,
+				"ValueMin": 0.95,
+				"ValueMax": 0.99,
 				"WeightingCurve": "MinIsUncommon",
 				"AlwaysChoose": false
 			}
@@ -13967,8 +13967,8 @@
 			{
 				"StatType": "Freighter_Fleet_Fuel",
 				"Name": "Freighter Fleet Fuel",
-				"ValueMin": 0.95,
-				"ValueMax": 0.9,
+				"ValueMin": 0.9,
+				"ValueMax": 0.95,
 				"WeightingCurve": "MinIsUncommon",
 				"AlwaysChoose": false
 			}
@@ -13998,8 +13998,8 @@
 			{
 				"StatType": "Freighter_Fleet_Fuel",
 				"Name": "Freighter Fleet Fuel",
-				"ValueMin": 0.9,
-				"ValueMax": 0.85,
+				"ValueMin": 0.85,
+				"ValueMax": 0.9,
 				"WeightingCurve": "MinIsUncommon",
 				"AlwaysChoose": false
 			}
@@ -14029,8 +14029,8 @@
 			{
 				"StatType": "Freighter_Fleet_Fuel",
 				"Name": "Freighter Fleet Fuel",
-				"ValueMin": 0.85,
-				"ValueMax": 0.8,
+				"ValueMin": 0.8,
+				"ValueMax": 0.85,
 				"WeightingCurve": "MinIsUncommon",
 				"AlwaysChoose": false
 			}
@@ -14744,9 +14744,9 @@
 			{
 				"StatType": "Ship_Launcher_TakeOffCost",
 				"Name": "Ship Launcher Take Off Cost",
-				"ValueMin": 0.95,
-				"ValueMax": 0.9,
-				"WeightingCurve": "MaxIsSuperRare",
+				"ValueMin": 0.9,
+				"ValueMax": 0.95,
+				"WeightingCurve": "MinIsSuperRare",
 				"AlwaysChoose": false
 			},
 			{
@@ -14791,8 +14791,8 @@
 			{
 				"StatType": "Ship_Launcher_TakeOffCost",
 				"Name": "Ship Launcher Take Off Cost",
-				"ValueMin": 0.9,
-				"ValueMax": 0.85,
+				"ValueMin": 0.85,
+				"ValueMax": 0.9,
 				"WeightingCurve": "MinIsRare",
 				"AlwaysChoose": false
 			},
@@ -14838,8 +14838,8 @@
 			{
 				"StatType": "Ship_Launcher_TakeOffCost",
 				"Name": "Ship Launcher Take Off Cost",
-				"ValueMin": 0.85,
-				"ValueMax": 0.8,
+				"ValueMin": 0.8,
+				"ValueMax": 0.85,
 				"WeightingCurve": "MinIsRare",
 				"AlwaysChoose": false
 			},
@@ -15159,6 +15159,37 @@
 		"Slug": "upgrades/CV_INV4"
 	},
 	{
+		"Id": "CV_TRACT1",
+		"Icon": "CV_TRACT1.png",
+		"IconPath": "textures/ui/frontend/icons/technology/render.landinggearmod.dds",
+		"Name": "Tractor Beam A-Class Upgrade",
+		"Name_LocStr": "UT_CR_TRACT_NAME",
+		"Group": "A-Class Upgrade",
+		"Description": "A extremely powerful upgrade for the Upgrade. Use [E] to begin upgrade installation process.\n\nThe module is flexible, and exact upgrade statistics are unknown until installation is complete.",
+		"Description_LocStr": "UT_CR_TRACT_DESC",
+		"Quality": "Epic",
+		"Category": "Corvette",
+		"Category_LocStr": null,
+		"Chargeable": false,
+		"ChargeAmount": 100,
+		"BuildFullyCharged": true,
+		"NumStatsMin": 1,
+		"NumStatsMax": 1,
+		"WeightingCurve": "NoWeighting",
+		"StatLevels": [
+			{
+				"StatType": "Ship_TractorBeam",
+				"Name": "Ship Tractor Beam",
+				"ValueMin": 1.0,
+				"ValueMax": 1.0,
+				"WeightingCurve": "NoWeighting",
+				"AlwaysChoose": false
+			}
+		],
+		"SourceTable": "Technology",
+		"Slug": "upgrades/CV_TRACT1"
+	},
+	{
 		"Id": "UA_PULSE1",
 		"Icon": "UA_PULSE1.png",
 		"IconPath": "textures/ui/frontend/icons/technology/bio/biotech.heart.mod.dds",
@@ -15435,7 +15466,7 @@
 				"Name": "Ship Launcher Take Off Cost",
 				"ValueMin": 0.9,
 				"ValueMax": 0.85,
-				"WeightingCurve": "MinIsRare",
+				"WeightingCurve": "MaxIsRare",
 				"AlwaysChoose": false
 			}
 		],
@@ -15466,7 +15497,7 @@
 				"Name": "Ship Launcher Take Off Cost",
 				"ValueMin": 0.85,
 				"ValueMax": 0.8,
-				"WeightingCurve": "MinIsRare",
+				"WeightingCurve": "MaxIsUncommon",
 				"AlwaysChoose": false
 			}
 		],
@@ -15497,7 +15528,7 @@
 				"Name": "Ship Launcher Take Off Cost",
 				"ValueMin": 0.8,
 				"ValueMax": 0.8,
-				"WeightingCurve": "MinIsUncommon",
+				"WeightingCurve": "NoWeighting",
 				"AlwaysChoose": false
 			},
 			{

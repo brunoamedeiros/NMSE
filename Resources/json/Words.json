@@ -793,6 +793,7 @@
 			"^TRA_ALWAYS": 0,
 			"^WAR_ALWAYS": 1,
 			"^EXP_ALWAYS": 2,
+			"^ATLAS_ALWAYS": 4,
 			"^BUI_ALWAYS": 8
 		}
 	},
@@ -2864,6 +2865,7 @@
 			"^TRA_CENTRE": 0,
 			"^WAR_CENTRE": 1,
 			"^EXP_CENTRE": 2,
+			"^ATLAS_CENTRE": 4,
 			"^BUI_CENTRE": 8
 		}
 	},
@@ -4857,6 +4859,7 @@
 			"^TRA_DO": 0,
 			"^WAR_DO": 1,
 			"^EXP_DO": 2,
+			"^ATLAS_DO": 4,
 			"^BUI_DO": 8
 		}
 	},
@@ -11400,6 +11403,7 @@
 			"^TRA_I": 0,
 			"^WAR_I": 1,
 			"^EXP_I": 2,
+			"^ATLAS_WE": 4,
 			"^BUI_I": 8
 		}
 	},
@@ -12974,6 +12978,7 @@
 			"^TRA_PLEASE": 0,
 			"^WAR_PLEASE": 1,
 			"^EXP_PLEASE": 2,
+			"^ATLAS_PLEASE": 4,
 			"^BUI_PLEASE": 8
 		}
 	},
@@ -18330,6 +18335,14 @@
 		}
 	},
 	{
+		"Id": "^UNFOLD",
+		"Text": "unfold",
+		"Text_LocStr": "ATLAS_UNFOLDS",
+		"Groups": {
+			"^ATLAS_UNFOLDS": 4
+		}
+	},
+	{
 		"Id": "^UNFOLDS",
 		"Text": "unfolds",
 		"Text_LocStr": "ATLAS_UNFOLDS",
@@ -19197,6 +19210,7 @@
 			"^TRA_IS": 0,
 			"^WAR_IS": 1,
 			"^EXP_IS": 2,
+			"^ATLAS_IS": 4,
 			"^BUI_IS": 8
 		}
 	},

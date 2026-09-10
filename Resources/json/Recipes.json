@@ -45285,5 +45285,71 @@
 		],
 		"TimeToMake": 0,
 		"Cooking": false
+	},
+	{
+		"Id": "REFINERECIPE_400",
+		"Category": "Refining",
+		"RecipeType": "RECIPE_ASTBELT1",
+		"RecipeType_LocStr": "RECIPE_ASTBELT1",
+		"RecipeName": "Crystal Processing",
+		"RecipeName_LocStr": "R_NAME_ASTBELT1",
+		"Result": {
+			"Id": "ASTEROID1",
+			"Type": "Substance",
+			"Amount": 1
+		},
+		"Ingredients": [
+			{
+				"Id": "ASTBELT1",
+				"Type": "Substance",
+				"Amount": 5
+			}
+		],
+		"TimeToMake": 0,
+		"Cooking": false
+	},
+	{
+		"Id": "REFINERECIPE_401",
+		"Category": "Refining",
+		"RecipeType": "RECIPE_HULK1",
+		"RecipeType_LocStr": "RECIPE_HULK1",
+		"RecipeName": "Metal Decontamination",
+		"RecipeName_LocStr": "R_NAME_HULK1",
+		"Result": {
+			"Id": "LAND3",
+			"Type": "Substance",
+			"Amount": 1
+		},
+		"Ingredients": [
+			{
+				"Id": "HULK1",
+				"Type": "Substance",
+				"Amount": 5
+			}
+		],
+		"TimeToMake": 0,
+		"Cooking": false
+	},
+	{
+		"Id": "REFINERECIPE_402",
+		"Category": "Refining",
+		"RecipeType": "RECIPE_SLIMEPOST1",
+		"RecipeType_LocStr": "RECIPE_SLIMEPOST1",
+		"RecipeName": "Toxin Extraction",
+		"RecipeName_LocStr": "R_NAME_SLIMEPOST1",
+		"Result": {
+			"Id": "PLANT_POOP",
+			"Type": "Substance",
+			"Amount": 1
+		},
+		"Ingredients": [
+			{
+				"Id": "SLIMEPOST1",
+				"Type": "Substance",
+				"Amount": 5
+			}
+		],
+		"TimeToMake": 0,
+		"Cooking": false
 	}
 ]

@@ -78,7 +78,10 @@ public class MxmlParser
         var loc = _localisation ?? new();
         string fallback = defaultValue ?? key;
 
-        if (loc.TryGetValue(key, out string? translation))
+        // Cosmos includes mixed-case references such as BLD_BIG_MAG_1x1_NAME,
+        // while the corresponding language-table keys are uppercase.
+        if (loc.TryGetValue(key, out string? translation)
+            || loc.TryGetValue(key.ToUpperInvariant(), out translation))
             return PostProcessTranslation(key, translation);
 
         if (MissingLocalisationOverrides.TryGetValue(key, out string? overrideVal))
