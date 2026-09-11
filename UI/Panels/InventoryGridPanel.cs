@@ -742,9 +742,11 @@ public partial class InventoryGridPanel : UserControl
         _suppressFilterEvents = true;
         _itemPicker.BeginUpdate();
         _itemPicker.Items.Clear();
-        _itemPicker.Items.Add(UiStrings.Get("common.select_item"));
 
         var items = GetFilteredItems().OrderBy(i => i.Name).ToArray();
+        _itemPicker.Items.Add(items.Length == 0
+            ? UiStrings.Get("inventory.picker_no_matches")
+            : UiStrings.Get("common.select_item"));
         _itemPicker.Items.AddRange(items);
 
         // Auto-size the dropdown width to fit the longest item name so that
@@ -764,6 +766,7 @@ public partial class InventoryGridPanel : UserControl
         _itemPicker.SelectedIndex = 0;
         _itemPicker.EndUpdate();
         _suppressFilterEvents = false;
+        ClearPickerDetailPanel();
     }
 
     private IEnumerable<GameItem> GetTypeFilteredItems()
@@ -870,6 +873,13 @@ public partial class InventoryGridPanel : UserControl
             .Where(i => !GameItemDatabase.IsPickerExcluded(i.Id))
             .ToList();
         PopulateTypeFilter();
+
+        // Make the filtered results visible instead of leaving a closed placeholder.
+        if (_itemPicker.Items.Count > 1)
+        {
+            _itemPicker.Focus();
+            _itemPicker.DroppedDown = true;
+        }
     }
 
     private void OnTypeFilterChanged(object? sender, EventArgs e)

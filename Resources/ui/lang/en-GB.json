@@ -963,6 +963,7 @@
   "inventory.picker_add_item": "Add Item",
   "inventory.picker_enter_id": "Select an item from the picker or enter an Item ID.",
   "inventory.picker_no_item": "(no item selected)",
+  "inventory.picker_no_matches": "(No matching items)",
   "inventory.picker_replace_item": "Replace Item",
   "inventory.remove_confirm": "Remove '{0}' from slot ({1}, {2})?",
   "inventory.remove_title": "Remove Item",
