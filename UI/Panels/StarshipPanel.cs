@@ -34,7 +34,7 @@ public partial class StarshipPanel : UserControl
     /// <summary>Raw (unclamped) ship stat values read from JSON for the currently selected ship.</summary>
     private Dictionary<string, double>? _rawShipStatValues;
 
-    /// <summary>True while the panel is performing an initial data load; suppresses UI side-effects.</summary>
+    /// <summary>True while ship fields are loading; suppresses edit events and selector-label updates.</summary>
     private bool _loading;
 
     /// <summary>Class index loaded from the save for the current ship, used to detect user changes.</summary>
@@ -76,6 +76,9 @@ public partial class StarshipPanel : UserControl
 
     private void OnShipTypeChanged(object? sender, EventArgs e)
     {
+        // Selecting a ship also selects its type. Loading must not act like a user edit
+        // or rebuild the label with the previous ship's class.
+        if (_loading) return;
         var typeItem = _shipType.SelectedItem as StarshipLogic.ShipTypeItem;
         if (typeItem == null)
             return;
@@ -247,10 +250,16 @@ public partial class StarshipPanel : UserControl
         var currentItem = _shipType.SelectedItem as StarshipLogic.ShipTypeItem;
         string? currentType = currentItem?.InternalName;
         string? currentCustomFilename = currentItem?.CustomFilename;
-        _shipType.Items.Clear();
-        _shipType.Items.AddRange(StarshipLogic.GetShipTypeItems());
-        if (currentType != null)
-            SelectShipTypeByName(currentType, currentCustomFilename != null, currentCustomFilename);
+        bool wasLoading = _loading;
+        _loading = true;
+        try
+        {
+            _shipType.Items.Clear();
+            _shipType.Items.AddRange(StarshipLogic.GetShipTypeItems());
+            if (currentType != null)
+                SelectShipTypeByName(currentType, currentCustomFilename != null, currentCustomFilename);
+        }
+        finally { _loading = wasLoading; }
     }
 
     public void SetDatabase(GameItemDatabase? database)
@@ -405,6 +414,8 @@ public partial class StarshipPanel : UserControl
         // causes a visible glitch as controls are removed and re-added.
         RedrawHelper.Suspend(this);
         SuspendLayout();
+        bool wasLoading = _loading;
+        _loading = true;
         try
         {
             if (_shipOwnership == null || _shipSelector.SelectedIndex < 0) return;
@@ -492,16 +503,27 @@ public partial class StarshipPanel : UserControl
             // Load customisation tab (enable/disable based on corvette status,
             // populate scene combo and dynamic part controls from CCD).
             LoadCustomisationTab(isCorvette, data.Filename, idx);
+
+            // Name, type and class now belong to the same ship. Refresh once,
+            // including same-type switches where no type-change event fires.
+            RefreshSelectedShipLabel();
         }
         catch { }
         finally
         {
+            _loading = wasLoading;
             ResumeLayout(true);
             RedrawHelper.Resume(this);
         }
     }
 
     private void OnShipNameChanged(object? sender, EventArgs e)
+    {
+        if (_loading) return;
+        RefreshSelectedShipLabel();
+    }
+
+    private void RefreshSelectedShipLabel()
     {
         if (_shipSelector.SelectedIndex < 0 || _shipSelector.Items.Count == 0) return;
         var item = (StarshipLogic.ShipListItem)_shipSelector.Items[_shipSelector.SelectedIndex]!;
@@ -522,13 +544,17 @@ public partial class StarshipPanel : UserControl
             newName = $"[{item.DataIndex + 1}] {_shipName.Text} - {cls}";
         }
 
+        if (item.DisplayName == newName) return;
         item.DisplayName = newName;
         int idx = _shipSelector.SelectedIndex;
         _shipSelector.SelectedIndexChanged -= OnShipSelected;
-        _shipSelector.Items.RemoveAt(idx);
-        _shipSelector.Items.Insert(idx, item);
-        _shipSelector.SelectedIndex = idx;
-        _shipSelector.SelectedIndexChanged += OnShipSelected;
+        try
+        {
+            _shipSelector.Items.RemoveAt(idx);
+            _shipSelector.Items.Insert(idx, item);
+            _shipSelector.SelectedIndex = idx;
+        }
+        finally { _shipSelector.SelectedIndexChanged += OnShipSelected; }
     }
 
     private string GetCurrentPinnedInventoryKey()
