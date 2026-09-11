@@ -110,11 +110,10 @@ public partial class MainFormResources : Form
     private int _prevTabIndex = -1;
 
     /// <summary>
-    /// Editor tabs gated until a save file is loaded: the content panel, the
-    /// overlay shown over it, and the original enabled state of every control
-    /// (restored when the lock is lifted).
+    /// Editor tabs gated until a save file is loaded: the content panel and
+    /// the overlay shown over it. Child controls retain their own enabled state.
     /// </summary>
-    private readonly List<(Control Panel, NoSaveOverlay Overlay, Dictionary<Control, bool> EnabledStates)> _lockedTabs = new();
+    private readonly List<(Control Panel, NoSaveOverlay Overlay)> _lockedTabs = new();
 
     /// <summary>Background icon preload task started during construction.</summary>
     private Task? _iconPreloadTask;
@@ -532,7 +531,7 @@ public partial class MainFormResources : Form
             page.Controls.Add(overlay);
             overlay.BringToFront();
 
-            _lockedTabs.Add((content, overlay, CaptureEnabledStates(content)));
+            _lockedTabs.Add((content, overlay));
         }
 
         UpdateEditorLockState();
@@ -546,44 +545,14 @@ public partial class MainFormResources : Form
     private void UpdateEditorLockState()
     {
         bool locked = _currentSaveData == null;
-        foreach (var (panel, overlay, states) in _lockedTabs)
+        foreach (var (panel, overlay) in _lockedTabs)
         {
             overlay.Visible = locked;
-            ApplyEnabledStates(panel, states, locked);
+            // Disable only the parent. Restoring constructor snapshots of its
+            // children would overwrite states set by the newly loaded save
+            // (for example, re-disable the inventory picker after F5 reload).
+            panel.Enabled = !locked;
         }
-    }
-
-    /// <summary>
-    /// Captures the current enabled state of every control in the given tree,
-    /// so the original states can be restored when the editor lock is lifted.
-    /// </summary>
-    private static Dictionary<Control, bool> CaptureEnabledStates(Control root)
-    {
-        var map = new Dictionary<Control, bool>();
-        void Walk(Control control)
-        {
-            map[control] = control.Enabled;
-            foreach (Control child in control.Controls)
-                Walk(child);
-        }
-        Walk(root);
-        return map;
-    }
-
-    /// <summary>
-    /// Applies the lock state to a control tree. When locking, every control is
-    /// disabled. When unlocking, each control is restored to its captured state;
-    /// controls created after capture (e.g. dynamically built rows) are enabled.
-    /// </summary>
-    private static void ApplyEnabledStates(Control root, Dictionary<Control, bool> states, bool locked)
-    {
-        void Walk(Control control)
-        {
-            control.Enabled = locked ? false : (states.TryGetValue(control, out bool original) ? original : true);
-            foreach (Control child in control.Controls)
-                Walk(child);
-        }
-        Walk(root);
     }
 
     /// <summary>
@@ -3035,7 +3004,7 @@ public partial class MainFormResources : Form
         RefreshInventoryUx();
 
         // ---- No-save overlay messages ----
-        foreach (var (_, overlay, _) in _lockedTabs)
+        foreach (var (_, overlay) in _lockedTabs)
             overlay.RefreshLocalisation();
     }
 
