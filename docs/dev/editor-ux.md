@@ -20,8 +20,8 @@ Branch: `feature/editor-ux`. Includes the earlier item picker and search feedbac
 
 ## Review Changes
 
-- Select a change in the list to see a side-by-side Before/After table. Inventory details use item names, quantities and slot positions; slot unlocks and other fields are shown as readable values. Only changed details appear.
-- Show advanced details (JSON) reveals optional raw values beside one another. Copy Summary uses the readable comparison. Large previews explicitly indicate omitted details.
+- Review Changes uses one table with Context, What changed, Before, and After. Each changed detail appears once, using item names, quantities and slot positions. Small reviews open in a shorter window; large reviews render visible rows as needed.
+- Show advanced details (JSON) reveals the selected change's raw values below the table. Copy Summary uses the readable comparison. Large previews explicitly indicate omitted details, and counts refer to original changes rather than their individual detail rows.
 - A grouped change uses Revert this group and a confirmation explaining that the entire group will be restored, including details outside the preview.
 - Open location and double-click reveal an inventory slot or the exact save/account JSON field.
 - Revert this change restores the selected value from the saved baseline, after checking the current value still matches the review.
