@@ -2833,11 +2833,9 @@ public partial class MainFormResources : Form
         config.Save();
 
         ThemeManager.SetTheme(theme);
-        // SetTheme fires ThemeChanged which triggers ReapplyTheme, so we don't
-        // need to call ThemeApplicator.ApplyToForm here directly. But re-applying
-        // is idempotent and protects against the event not being subscribed yet.
-        ThemeApplicator.ApplyToForm(this);
-        UpdateThemeMenuChecks();
+        // Also refresh when selecting the already-active theme. Use the full
+        // refresh so status colors survive the general theme application.
+        ReapplyTheme();
     }
 
     /// <summary>
@@ -2849,6 +2847,7 @@ public partial class MainFormResources : Form
 		ThemeApplicator.ApplyToForm(this);
 		_mainStatsPanel.RefreshGlyphButtonImages();
 		UpdateThemeMenuChecks();
+		RefreshInventoryUx();
 	}
 
     /// <summary>
