@@ -2297,5 +2297,13 @@
   "summary.readable.count_one": "1 alteração desde que você carregou ou salvou.",
   "summary.readable.group_selection": "Reverter este grupo restaura todo o conteúdo de “{0}” ({1:N0} linhas de detalhes exibidas).",
   "summary.readable.cancel_save_hint": "Abrir ou reverter uma alteração cancela o salvamento pendente.",
-  "summary.readable.some_details_omitted": "Alguns detalhes foram abreviados ou omitidos. Há detalhes avançados disponíveis para a alteração selecionada."
+  "summary.readable.some_details_omitted": "Alguns detalhes foram abreviados ou omitidos. Há detalhes avançados disponíveis para a alteração selecionada.",
+  "local_standing.title": "Reputação local da estação",
+  "local_standing.help": "A reputação obtida no sistema exibido acima é separada da sua reputação geral. Apenas a raça e a guilda presentes na estação contam para reivindicá-la.",
+  "local_standing.ready": "Edite um valor e use Revisar alterações e Salvar. Recarregue o jogo para conferir os requisitos da estação.",
+  "local_standing.unavailable": "Os campos indisponíveis não possuem um registro local compatível neste save. Obtenha reputação na estação, salve no jogo e recarregue o save aqui.",
+  "local_standing.no_system": "Nenhum sistema atual está disponível neste save.",
+  "local_standing.system": "Galáxia {0} · Sistema {1}",
+  "local_standing.requirement": "Requisito nesta estação: {0}",
+  "local_standing.stale": "A reputação local mudou desde que esta tela foi carregada. Recarregue o save antes de editar novamente."
 }

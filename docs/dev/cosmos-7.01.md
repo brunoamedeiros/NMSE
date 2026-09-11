@@ -57,7 +57,19 @@ integrates both feature branches.
 
 ## Remaining scope
 
+Milestones now includes Local Station Standing for an existing current-system
+`^SYSTEM_STATS` group. The group is selected by its packed universe address with
+planet zero, including galaxy bits. Race and guild fields are matched by stat ID;
+global reputation and other systems are preserved. Missing or ambiguous records
+are not created. The UI supports English and Brazilian Portuguese, with English
+fallback for other languages.
+
+The local Gek field `^TRA_STANDING.Value.IntValue` was identified from a user's
+reported 10/30 standing and backup progression from empty (zero) through 5, 8,
+and 10. The same group contains the other race and guild standing IDs. An empty
+Value object represents zero; edits write only IntValue. Manual in-game
+confirmation of an edited local standing value remains necessary.
+
 Dedicated alliance and station-directorship editing still needs populated save
-examples to establish the structures and behavior. The updated item database and
-guide topic do not implement those editing panels. The save round-trip check is
-not an in-game validation of every Cosmos editing operation.
+examples. `^SP_POI_MISSIONS` is a candidate salvage-contract counter, but remains
+unexposed until a completed-contract before/after comparison validates it.

@@ -2329,5 +2329,13 @@
   "summary.readable.count_one": "1 change since loading or your last save.",
   "summary.readable.group_selection": "Revert this group restores all of “{0}” ({1:N0} detail rows shown).",
   "summary.readable.cancel_save_hint": "Opening or reverting a change cancels the pending save.",
-  "summary.readable.some_details_omitted": "Some details are shortened or omitted. Advanced details are available for the selected change."
+  "summary.readable.some_details_omitted": "Some details are shortened or omitted. Advanced details are available for the selected change.",
+  "local_standing.title": "Local Station Standing",
+  "local_standing.help": "Standing earned in the system shown above is separate from your general reputation. Only the race and guild present at its station count toward claiming it.",
+  "local_standing.ready": "Edit a value, then use Review Changes and Save. Reload the game to check the station requirements.",
+  "local_standing.unavailable": "Unavailable fields have no supported local record in this save. Earn standing at the station, save in-game, then reload the save here.",
+  "local_standing.no_system": "No current system is available in this save.",
+  "local_standing.system": "Galaxy {0} · System {1}",
+  "local_standing.requirement": "Required at this station: {0}",
+  "local_standing.stale": "Local standing changed since this view was loaded. Reload the save before editing it again."
 }

@@ -41,6 +41,7 @@ internal static class ChangePresentationLogic
         private bool _inventoryItemId;
         private bool _itemReferences;
         private bool _playerCurrency;
+        private bool _localStanding;
         private string? _slotCoordinateKey;
 
         private string DisplayField(string key) => key == _slotCoordinateKey
@@ -83,7 +84,27 @@ internal static class ChangePresentationLogic
             if (area.Length == 0) area = T("save", "Save");
             if (title.Length == 0) title = T("change", "Change");
 
-            Walk(change.BeforeValue, change.HadBefore, change.AfterValue, change.HasAfter, "", key, 0);
+            var tokens = change.Tokens;
+            if (change.Scope == ChangeReviewLogic.DataScope.Save && currentRoot != null && tokens.Count >= 6 &&
+                tokens[^1].Key == "IntValue" && tokens[^2].Key == "Value" && tokens[^4].Key == "Stats" && tokens[^6].Key == "Stats" &&
+                ChangeReviewLogic.TryRead(currentRoot, tokens.Take(tokens.Count - 4).ToArray(), out var groupValue) &&
+                groupValue is JsonObject group && group.Get("GroupId") is "^SYSTEM_STATS" &&
+                LocalStandingLogic.TryAddress(group.Get("Address"), out long address) &&
+                ChangeReviewLogic.TryRead(currentRoot, tokens.Take(tokens.Count - 2).ToArray(), out var entryValue) && entryValue is JsonObject entry)
+            {
+                var field = LocalStandingLogic.Fields.FirstOrDefault(field => field.Id == entry.Get("Id") as string);
+                if (field.Id != null)
+                {
+                    _localStanding = true;
+                    var location = SpacePoiLogic.UnpackUniverseAddress(address);
+                    area = Join(change.Area, UiStrings.Get("local_standing.title"));
+                    area = Join(area, string.Format(CultureInfo.CurrentCulture, UiStrings.GetOrNull("local_standing.system") ?? "Galaxy {0} · System {1}", location.RealityIndex + 1,
+                        Utilities.CoordinateHelper.VoxelToSignalBooster(location.VoxelX, location.VoxelY, location.VoxelZ, location.SolarSystemIndex)));
+                    title = UiStrings.Get(field.LabelKey);
+                }
+            }
+
+            Walk(change.BeforeValue, change.HadBefore, change.AfterValue, change.HasAfter, _localStanding ? title : "", key, 0);
             // The group remains an exact, atomic array edit even when slot contents are only reordered.
             if (_rows.Count == 0 && (change.HadBefore != change.HasAfter || !ChangeReviewLogic.Equal(change.BeforeValue, change.AfterValue)))
                 Add(title, Scalar(change.BeforeValue, change.HadBefore, key), Scalar(change.AfterValue, change.HasAfter, key));
@@ -253,6 +274,7 @@ internal static class ChangePresentationLogic
 
         private string Scalar(object? value, bool exists, string key)
         {
+            if (_localStanding && !exists) return "0";
             if (!exists) return T("missing", "Not present");
             if (_playerCurrency && ChangeSummaryLogic.TryFormatCurrency(value, out string amount)) return amount;
             if (key == _slotCoordinateKey && value is int or long)

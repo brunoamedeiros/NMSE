@@ -445,6 +445,8 @@ partial class MilestonePanel
         _gotoJsonBtns.Add(tab2GotoBtn);
         _tabControl.TabPages.Add(tab2);
 
+        InitializeLocalStanding();
+
         Controls.Add(_tabControl);
 
         ResumeLayout(false);

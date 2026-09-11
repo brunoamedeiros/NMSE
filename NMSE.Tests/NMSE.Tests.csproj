@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="..\Core\StarshipLogic.cs" Link="Core\StarshipLogic.cs" />
     <Compile Include="..\Core\MainStatsLogic.cs" Link="Core\MainStatsLogic.cs" />
+    <Compile Include="..\Core\LocalStandingLogic.cs" Link="Core\LocalStandingLogic.cs" />
     <Compile Include="..\Core\ExportConfig.cs" Link="Core\ExportConfig.cs" />
     <Compile Include="..\Core\MultitoolLogic.cs" Link="Core\MultitoolLogic.cs" />
     <Compile Include="..\Core\FreighterLogic.cs" Link="Core\FreighterLogic.cs" />
