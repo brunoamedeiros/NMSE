@@ -2323,5 +2323,7 @@
   "summary.readable.array_type": "List",
   "summary.readable.number_type": "Number",
   "summary.readable.column": "Column",
-  "summary.readable.row": "Row"
+  "summary.readable.row": "Row",
+  "inventory_ux.charge_summary": "Charge: {0:N0} / {1:N0}",
+  "inventory_ux.amount_hint": "Press Enter or click Apply to update the amount. Esc resets the input. Save writes applied changes to disk."
 }

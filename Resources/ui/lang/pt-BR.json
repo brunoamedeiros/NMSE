@@ -2291,5 +2291,7 @@
   "summary.readable.array_type": "Lista",
   "summary.readable.number_type": "Número",
   "summary.readable.column": "Coluna",
-  "summary.readable.row": "Linha"
+  "summary.readable.row": "Linha",
+  "inventory_ux.charge_summary": "Carga: {0:N0} / {1:N0}",
+  "inventory_ux.amount_hint": "Pressione Enter ou clique em Aplicar para atualizar a quantidade. Esc restaura o campo. Salve para gravar as alterações aplicadas no disco."
 }
