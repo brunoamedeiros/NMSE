@@ -35,6 +35,7 @@ public partial class MainFormResources
     {
         _summarySaveBaseline = _currentSaveData == null ? null : ChangeSummaryLogic.Capture(_currentSaveData);
         _summaryAccountBaseline = _accountPanel.AccountData == null ? null : ChangeSummaryLogic.Capture(_accountPanel.AccountData);
+        CaptureInventoryUxBaseline();
     }
 
     private ChangeSummaryLogic.Report BuildChangeSummary()
@@ -44,7 +45,7 @@ public partial class MainFormResources
         if (_summaryAccountBaseline != null && _accountPanel.AccountData != null && !report.Truncated)
         {
             var account = ChangeSummaryLogic.Compare(ChangeSummaryLogic.Restore(_summaryAccountBaseline), _accountPanel.AccountData,
-                UiStrings.Get("summary.account"), Math.Max(0, 2000 - report.Changes.Count));
+                UiStrings.Get("summary.account"), Math.Max(0, 2000 - report.Changes.Count), ChangeReviewLogic.DataScope.Account);
             report.Changes.AddRange(account.Changes);
             report = new(report.Changes, account.Truncated);
         }
@@ -53,23 +54,55 @@ public partial class MainFormResources
 
     private bool ReviewBeforeSave()
     {
+        if (!PreservePendingRawText()) return false;
         var report = BuildChangeSummary();
         if (report.Changes.Count == 0 && !report.Truncated) return true;
         using var dialog = new ChangeSummaryDialog(report, beforeSave: true);
-        return dialog.ShowDialog(this) == DialogResult.OK;
+        if (dialog.ShowDialog(this) == DialogResult.OK) return true;
+        HandleChangeReviewAction(dialog);
+        return false;
     }
 
     private void OnChangeSummary(object? sender, EventArgs e)
     {
         if (_currentSaveData == null) return;
+        if (!PreservePendingRawText()) return;
         try
         {
             ActiveControl = null;
             SyncAllPanelData();
             using var dialog = new ChangeSummaryDialog(BuildChangeSummary(), beforeSave: false);
             dialog.ShowDialog(this);
+            HandleChangeReviewAction(dialog);
         }
         catch (Exception ex) { MessageBox.Show(this, ex.Message, UiStrings.Get("dialog.error")); }
+    }
+
+    private void HandleChangeReviewAction(ChangeSummaryDialog dialog)
+    {
+        if (_currentSaveData == null || dialog.SelectedChange is not { } change) return;
+        if (!PreservePendingRawText()) return;
+        if (dialog.RequestedAction == ChangeSummaryDialog.ReviewAction.Revert)
+        {
+            var data = change.Scope == ChangeReviewLogic.DataScope.Account ? _accountPanel.AccountData : _currentSaveData;
+            if (data == null || !ChangeReviewLogic.TryRevert(data, change, out _))
+            {
+                MessageBox.Show(this, UiStrings.Get("summary.stale"), UiStrings.Get("tools_plus.summary"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            RefreshLoadedPanels();
+            NotifyExternalInventoryEdit(UiStrings.Format("summary.reverted", change.Field));
+        }
+        if (dialog.RequestedAction is ChangeSummaryDialog.ReviewAction.Open or ChangeSummaryDialog.ReviewAction.Revert)
+        {
+            if (ChangeReviewLogic.TryFindInventory(_currentSaveData, change, out var location, out int? x, out int? y)
+                && location != null && OpenInventoryLocation(location, x, y)) return;
+            _isGoToJsonNavigation = true;
+            try { _tabControl.SelectedIndex = 14; }
+            finally { _isGoToJsonNavigation = false; }
+            _rawJsonPanel.NavigateToReviewChange(_currentSaveData, _accountPanel.AccountData, _accountPanel.AccountFilePath, change);
+        }
     }
 
     private void OnHotkeys(object? sender, EventArgs e)
@@ -85,6 +118,7 @@ public partial class MainFormResources
                 _hasUnsavedChanges = true;
                 _rawJsonPanel.NotifyDataChanged();
                 if (_loadedTabIndices.Contains(14)) _rawJsonPanel.RefreshTree(_currentSaveData);
+                OnEditorDataModified(_mainStatsPanel, EventArgs.Empty);
             }
         }
         catch (Exception ex) { MessageBox.Show(this, UiStrings.GetOrNull(ex.Message) ?? ex.Message, UiStrings.Get("dialog.error")); }
@@ -99,30 +133,36 @@ public partial class MainFormResources
             SyncAllPanelData();
             using var dialog = new InventorySearchDialog(InventorySearchLogic.Index(_currentSaveData, _database));
             if (dialog.ShowDialog(this) != DialogResult.OK || dialog.SelectedResult is not { } result) return;
-            _tabControl.SelectedIndex = result.Location.Tab;
-            switch (result.Location.Collection)
-            {
-                case "ShipOwnership": _shipPanel.SelectSearchShip(result.Location.Index); break;
-                case "Multitools": _multitoolPanel.SelectSearchTool(result.Location.Index); break;
-                case "VehicleOwnership": _vehiclePanel.SelectSearchVehicle(result.Location.Index); break;
-            }
-            if (result.Location.Tab == 7) _basePanel.PrepareInventorySearch(result.Location.Inventory);
-            var content = GetTabContent(_tabControl.SelectedTab);
-            foreach (var grid in Descendants(content).OfType<InventoryGridPanel>())
-            {
-                if (!grid.HasInventory(result.Location.Inventory)) continue;
-                // Reveal nested inventory tabs from outside in before focusing the slot.
-                var ancestors = new List<TabPage>();
-                for (Control? parent = grid.Parent; parent != null; parent = parent.Parent)
-                    if (parent is TabPage page) ancestors.Add(page);
-                ancestors.Reverse();
-                foreach (var page in ancestors)
-                    if (page.Parent is TabControl tabs) tabs.SelectedTab = page;
-                if (grid.FocusSearchSlot(result.Location.Inventory, result.X, result.Y)) return;
-            }
+            if (OpenInventoryLocation(result.Location, result.X, result.Y)) return;
             MessageBox.Show(this, UiStrings.Get("tools_plus.slot_unavailable"), UiStrings.Get("tools_plus.search"));
         }
         catch (Exception ex) { MessageBox.Show(this, ex.Message, UiStrings.Get("dialog.error")); }
+    }
+
+    private bool OpenInventoryLocation(InventorySearchLogic.InventoryLocation location, int? x = null, int? y = null)
+    {
+        _tabControl.SelectedIndex = location.Tab;
+        switch (location.Collection)
+        {
+            case "ShipOwnership": _shipPanel.SelectSearchShip(location.Index); break;
+            case "Multitools": _multitoolPanel.SelectSearchTool(location.Index); break;
+            case "VehicleOwnership": _vehiclePanel.SelectSearchVehicle(location.Index); break;
+        }
+        if (location.Tab == 7) _basePanel.PrepareInventorySearch(location.Inventory);
+        foreach (var grid in Descendants(GetTabContent(_tabControl.SelectedTab)).OfType<InventoryGridPanel>())
+        {
+            if (!grid.HasInventory(location.Inventory)) continue;
+            var ancestors = new List<TabPage>();
+            for (Control? parent = grid.Parent; parent != null; parent = parent.Parent)
+                if (parent is TabPage page) ancestors.Add(page);
+            ancestors.Reverse();
+            foreach (var page in ancestors)
+                if (page.Parent is TabControl tabs) tabs.SelectedTab = page;
+            if (x.HasValue && y.HasValue) return grid.FocusSearchSlot(location.Inventory, x.Value, y.Value);
+            grid.Focus();
+            return true;
+        }
+        return false;
     }
 
     private static IEnumerable<Control> Descendants(Control? parent)

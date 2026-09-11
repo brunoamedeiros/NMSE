@@ -175,23 +175,23 @@ public partial class MainFormResources : Form
         _cataloguePanel.AddRecipeTab(_recipePanel);
 
         // Track unsaved changes from inventory grids
-        _exosuitPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
+        _exosuitPanel.DataModified += OnEditorDataModified;
         _exosuitPanel.CrossInventoryTransferCompleted += OnExosuitCrossInventoryTransferCompleted;
-        _multitoolPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _shipPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
+        _multitoolPanel.DataModified += OnEditorDataModified;
+        _shipPanel.DataModified += OnEditorDataModified;
         _shipPanel.CrossInventoryTransferCompleted += OnStarshipCrossInventoryTransferCompleted;
-        _fleetPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _vehiclePanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _cataloguePanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _accountPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _basePanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _mainStatsPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _milestonePanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _settlementPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _companionPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
+        _fleetPanel.DataModified += OnEditorDataModified;
+        _vehiclePanel.DataModified += OnEditorDataModified;
+        _cataloguePanel.DataModified += OnEditorDataModified;
+        _accountPanel.DataModified += OnEditorDataModified;
+        _basePanel.DataModified += OnEditorDataModified;
+        _mainStatsPanel.DataModified += OnEditorDataModified;
+        _milestonePanel.DataModified += OnEditorDataModified;
+        _settlementPanel.DataModified += OnEditorDataModified;
+        _companionPanel.DataModified += OnEditorDataModified;
         _companionPanel.ExosuitCargoModified += OnCompanionExosuitCargoModified;
-        _byteBeatPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
-        _rawJsonPanel.DataModified += (s, e) => _hasUnsavedChanges = true;
+        _byteBeatPanel.DataModified += OnEditorDataModified;
+        _rawJsonPanel.DataModified += OnEditorDataModified;
 
         // Wire up GOTO JSON navigation from sub-panels
         _fleetPanel.GoToJsonRequested += OnGoToJsonRequested;
@@ -223,6 +223,7 @@ public partial class MainFormResources : Form
         InitializeToolbar();
         InitializeStatusBar();
         InitializeTabs();
+        InitializeInventoryUx();
         InstallEditorLock();
 
         // Subscribe to theme changes so the form re-themes when the user picks a new theme.
@@ -641,6 +642,8 @@ public partial class MainFormResources : Form
                 if (content != null) content.Visible = true;
             }
         }
+
+        RefreshInventoryUx();
 
         // Sync data to in-memory JSON and refresh tree when switching to Raw JSON tab
         // (but not during GoToJson navigation — the handler does this itself)
@@ -1690,6 +1693,7 @@ public partial class MainFormResources : Form
             _saveButton.Enabled = true;
             UpdateEditorLockState();
             EnableMenuItems();
+            RefreshInventoryUx();
 
             _statusLabel.Text = UiStrings.Format("status.loaded_save", Path.GetFileName(filePath), loadTimer.ElapsedMilliseconds.ToString("N0", CultureInfo.CurrentCulture));
             _hasUnsavedChanges = false;
@@ -1995,6 +1999,7 @@ public partial class MainFormResources : Form
             _saveButton.Enabled = true;
             UpdateEditorLockState();
             EnableMenuItems();
+            RefreshInventoryUx();
             _statusLabel.Text = UiStrings.Format("status.loaded_xbox", slotId, loadTimer.ElapsedMilliseconds.ToString("N0", CultureInfo.CurrentCulture));
             _hasUnsavedChanges = false;
         }
@@ -2069,6 +2074,7 @@ public partial class MainFormResources : Form
             _saveButton.Enabled = true;
             UpdateEditorLockState();
             EnableMenuItems();
+            RefreshInventoryUx();
             _statusLabel.Text = UiStrings.Format("status.loaded_ps4", slotIndex, loadTimer.ElapsedMilliseconds.ToString("N0", CultureInfo.CurrentCulture));
             _hasUnsavedChanges = false;
         }
@@ -2553,6 +2559,7 @@ public partial class MainFormResources : Form
                 for (int i = 0; i <= 14; i++)
                     _loadedTabIndices.Add(i);
 
+                ResetInventoryUxForImport();
                 _statusLabel.Text = UiStrings.Format("status.imported_json", Path.GetFileName(dialog.FileName));
             }
             catch (Exception ex)
@@ -2568,11 +2575,12 @@ public partial class MainFormResources : Form
     private void OnToolsRechargeAllTech(object? sender, EventArgs e)
     {
         if (_currentSaveData == null) return;
+        SyncAllPanelData();
         var playerState = _currentSaveData.GetObject("PlayerStateData");
         if (playerState == null) return;
 
         int count = InventoryBulkActions.RechargeAllTechnology(playerState, _database);
-        if (count > 0) _hasUnsavedChanges = true;
+        if (count > 0) NotifyExternalInventoryEdit(UiStrings.Get("inventory_ux.inventory_edit"));
         ReloadAllLoadedPanels();
         _statusLabel.Text = UiStrings.Format("status.recharged_all_tech", count);
     }
@@ -2580,11 +2588,12 @@ public partial class MainFormResources : Form
     private void OnToolsRefillAllStacks(object? sender, EventArgs e)
     {
         if (_currentSaveData == null) return;
+        SyncAllPanelData();
         var playerState = _currentSaveData.GetObject("PlayerStateData");
         if (playerState == null) return;
 
         int count = InventoryBulkActions.RefillAllStacks(playerState, _database);
-        if (count > 0) _hasUnsavedChanges = true;
+        if (count > 0) NotifyExternalInventoryEdit(UiStrings.Get("inventory_ux.inventory_edit"));
         ReloadAllLoadedPanels();
         _statusLabel.Text = UiStrings.Format("status.refilled_all_stacks", count);
     }
@@ -2592,11 +2601,12 @@ public partial class MainFormResources : Form
     private void OnToolsRepairAllSlots(object? sender, EventArgs e)
     {
         if (_currentSaveData == null) return;
+        SyncAllPanelData();
         var playerState = _currentSaveData.GetObject("PlayerStateData");
         if (playerState == null) return;
 
         int count = InventoryBulkActions.RepairAllSlots(playerState, _database);
-        if (count > 0) _hasUnsavedChanges = true;
+        if (count > 0) NotifyExternalInventoryEdit(UiStrings.Get("inventory_ux.inventory_edit"));
         ReloadAllLoadedPanels();
         _statusLabel.Text = UiStrings.Format("status.repaired_all_slots", count);
     }
@@ -2604,11 +2614,12 @@ public partial class MainFormResources : Form
     private void OnToolsRepairAllTech(object? sender, EventArgs e)
     {
         if (_currentSaveData == null) return;
+        SyncAllPanelData();
         var playerState = _currentSaveData.GetObject("PlayerStateData");
         if (playerState == null) return;
 
         int count = InventoryBulkActions.RepairAllTechnology(playerState, _database);
-        if (count > 0) _hasUnsavedChanges = true;
+        if (count > 0) NotifyExternalInventoryEdit(UiStrings.Get("inventory_ux.inventory_edit"));
         ReloadAllLoadedPanels();
         _statusLabel.Text = UiStrings.Format("status.repaired_all_tech", count);
     }
@@ -3021,6 +3032,7 @@ public partial class MainFormResources : Form
         _vehiclePanel.ApplyUiLocalisation();
         _multitoolPanel.ApplyUiLocalisation();
         _shipPanel.ApplyUiLocalisation();
+        RefreshInventoryUx();
 
         // ---- No-save overlay messages ----
         foreach (var (_, overlay, _) in _lockedTabs)
