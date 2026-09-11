@@ -316,6 +316,7 @@ public partial class MilestonePanel : UserControl
                 nud.NumericValue = 0;
 
         _rawMilestoneValues.Clear();
+        LoadLocalStanding(saveData);
 
         var entries = FindGlobalStats(saveData);
         if (entries == null) return;
@@ -351,6 +352,7 @@ public partial class MilestonePanel : UserControl
 
     public void SaveData(JsonObject saveData)
     {
+        SaveLocalStanding(saveData);
         var entries = FindGlobalStats(saveData);
         if (entries == null) return;
 
@@ -392,6 +394,7 @@ public partial class MilestonePanel : UserControl
 
     public void ApplyUiLocalisation()
     {
+        LocaliseLocalStanding();
         if (_tabControl.TabPages.Count >= 2)
         {
             _tabControl.TabPages[0].Text = UiStrings.Get("milestone.tab_main");
