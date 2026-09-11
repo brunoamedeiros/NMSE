@@ -2745,114 +2745,36 @@ public partial class InventoryGridPanel : UserControl
 
     private void OnAddItem(object? sender, EventArgs e)
     {
-        if (_contextCell == null || _currentInventory == null) return;
+        if (_contextCell == null || _currentInventory == null || _database == null || _slots == null) return;
+        var target = _contextCell;
+        bool hasItem = target.SlotData != null && !string.IsNullOrEmpty(target.ItemId) && !target.IsValidEmpty;
+        if (!target.IsActivated && !target.IsValidEmpty && !hasItem) return;
 
-        // Get the selected item from the picker or the ID field
-        string itemId = _detailItemId.Text.Trim();
+        var items = _database.Items.Values
+            .Where(i => !GameItemDatabase.IsPickerExcluded(i.Id))
+            .Where(CanAddItemToInventory);
+        using var picker = new InventoryItemPickerDialog(
+            hasItem ? "inventory.ctx_replace_item" : "inventory.ctx_add_item", items, item =>
+            {
+                string type = ResolveInventoryTypeForItem(item);
+                int maximum = InventoryStackDatabase.GetMaxAmount(item, type, _inventoryGroup);
+                if (type == "Technology")
+                    return (0, Math.Max(0, maximum), item.BuildFullyCharged ? Math.Max(0, maximum) : 0);
+                return (1, Math.Max(1, maximum), 1);
+            });
+        if (picker.ShowDialog(FindForm()) != DialogResult.OK || picker.SelectedItem == null) return;
 
-        if (_itemPicker.SelectedItem is GameItem pickedItem)
-            itemId = pickedItem.Id;
-
-        if (string.IsNullOrEmpty(itemId))
-        {
-            MessageBox.Show(this, UiStrings.Get("inventory.add_select_first"),
-                UiStrings.Get("inventory.add_item_title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return;
-        }
-
-        // Strip any seed from the item ID (seed comes from the dedicated field)
-        var (cleanId, _) = StripProceduralSeed(itemId);
-        itemId = cleanId;
-
-        // Read the numeric values from detail controls - always use user-specified values.
-        int amount = (int)(_detailAmount.NumericValue ?? 0);
-        int maxAmount = (int)(_detailMaxAmount.NumericValue ?? 0);
-
-        // Determine inventory type
-        string invType = "Product";
-        GameItem? gameItem = null;
-        if (_database != null)
-        {
-            (gameItem, _, _) = ResolveGameItem(itemId);
-            if (gameItem != null)
-                invType = ResolveInventoryTypeForItem(gameItem);
-        }
-
-        // Figurines (BOBBLE_*) installed in tech slots need the T_ prefix.
-        string saveItemId = itemId;
-        if (gameItem != null && IsFigurineItem(gameItem.Id) && _isTechInventory)
-        {
-            saveItemId = "T_" + gameItem.Id;
-            invType = "Technology";
-        }
-
-        // Technology: MaxAmount = ChargeAmount (always). Amount defaults using BuildFullyCharged.
-        // Verified against MXML, game save, and other editor behaviour.
-        if (invType == "Technology")
-        {
-            int techMaxAmount = gameItem != null
-                ? InventoryStackDatabase.GetMaxAmount(gameItem, "Technology", _inventoryGroup)
-                : 100;
-            if (maxAmount == 0) maxAmount = techMaxAmount;
-            if (amount == 0)
-                amount = (gameItem != null && gameItem.BuildFullyCharged)
-                    ? techMaxAmount
-                    : 0;
-        }
-        else
-        {
-            // For non-technology items, zero amounts are treated as unset - default to 1.
-            // Negative values are intentionally preserved as they are valid game data.
-            if (amount == 0 && maxAmount == 0) { amount = 1; maxAmount = 1; }
-            if (maxAmount == 0) maxAmount = amount;
-        }
-
-        // Build the final save ID using the seed from the dedicated field
-        string itemIdToWrite = BuildSaveItemId(saveItemId, gameItem);
-
-        // Create a new slot JSON object
-        var newSlot = new JsonObject();
-
-        var typeObj = new JsonObject();
-        typeObj.Add("InventoryType", invType);
-        newSlot.Add("Type", typeObj);
-        newSlot.Add("Id", itemIdToWrite);
-
-        newSlot.Add("Amount", amount);
-        newSlot.Add("MaxAmount", maxAmount);
-        newSlot.Add("DamageFactor", 0.0);
-        newSlot.Add("FullyInstalled", true);
-        newSlot.Add("AddedAutomatically", false);
-
-        var indexObj = new JsonObject();
-        indexObj.Add("X", _contextCell.GridX);
-        indexObj.Add("Y", _contextCell.GridY);
-        newSlot.Add("Index", indexObj);
-
-        // If cell already has slot data, replace it in the array
-        if (_contextCell.SlotData != null && _contextCell.SlotIndex >= 0 && _slots != null)
-        {
-            _slots.Set(_contextCell.SlotIndex, newSlot);
-        }
-        else if (_slots != null)
-        {
-            // Add new slot to the array
-            _slots.Add(newSlot);
-            _contextCell.SlotIndex = _slots.Length - 1;
-        }
-
-        // Update cell
-        _contextCell.SlotData = newSlot;
-        _contextCell.IsValidEmpty = false;
-        _contextCell.IsEmpty = false;
-        LoadCellData(_contextCell);
-        _contextCell.UpdateDisplay();
-
-        // Select the newly added cell
-        SelectCell(_contextCell);
-        RaiseDataModified();
+        // Use the same insertion path as the sidebar, including procedural seeds,
+        // inventory-specific stack limits, and preservation of binary IDs.
+        SelectCell(target);
+        _searchBox.Clear();
+        _allItems = _database.Items.Values
+            .Where(i => !GameItemDatabase.IsPickerExcluded(i.Id)).ToList();
+        PopulateTypeFilter();
+        _itemPicker.SelectedItem = picker.SelectedItem;
+        _pickerAmount.NumericValue = picker.Amount;
+        OnPickerApplyItem(sender, e);
     }
-
     private void OnRemoveItem(object? sender, EventArgs e)
     {
         if (_contextCell?.SlotData == null || _slots == null) return;

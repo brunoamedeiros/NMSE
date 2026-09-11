@@ -937,6 +937,7 @@
   "inventory.picker_enter_id": "Selecione um objeto da lista ou insira um ID de objeto.",
   "inventory.picker_no_item": "(nenhum objeto selecionado)",
   "inventory.picker_no_matches": "(Nenhum item encontrado)",
+  "inventory.picker_match_count": "{0:N0} itens encontrados",
   "inventory.picker_replace_item": "Substituir objeto",
   "inventory.remove_confirm": "Remover '{0}' do slot ({1}, {2})?",
   "inventory.remove_title": "Remover Item",
