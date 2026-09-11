@@ -40,6 +40,7 @@ internal static class ChangePresentationLogic
         private bool _valueTruncated;
         private bool _inventoryItemId;
         private bool _itemReferences;
+        private bool _playerCurrency;
         private string? _slotCoordinateKey;
 
         private string DisplayField(string key) => key == _slotCoordinateKey
@@ -60,6 +61,7 @@ internal static class ChangePresentationLogic
             string area = change.Area;
             _itemReferences = change.Tokens.Any(token => token.Key is "KnownTech" or "KnownProducts");
             bool grouped = change.BeforeValue is JsonObject or JsonArray || change.AfterValue is JsonObject or JsonArray;
+            _playerCurrency = !grouped && ChangeSummaryLogic.IsPlayerCurrency(change.Tokens, change.Scope);
             if (change.Scope == ChangeReviewLogic.DataScope.Account)
                 area = UiStrings.GetOrNull("summary.account") ?? T("account", "Account");
             else if (currentRoot != null && ChangeReviewLogic.TryFindInventory(currentRoot, change, out var location, out int? x, out int? y))
@@ -252,6 +254,7 @@ internal static class ChangePresentationLogic
         private string Scalar(object? value, bool exists, string key)
         {
             if (!exists) return T("missing", "Not present");
+            if (_playerCurrency && ChangeSummaryLogic.TryFormatCurrency(value, out string amount)) return amount;
             if (key == _slotCoordinateKey && value is int or long)
                 return (Convert.ToDecimal(value, CultureInfo.InvariantCulture) + 1).ToString("N0", CultureInfo.CurrentCulture);
             if (_inventoryItemId && key == "Id" && value is string or BinaryData) return ItemName(value);
