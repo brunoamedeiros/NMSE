@@ -5,6 +5,8 @@ using NMSE.Models;
 
 namespace NMSE.Tests;
 
+// Presentation reads UiStrings repeatedly; language-switching tests must not run alongside it.
+[Collection("MutableStaticDatabases")]
 public class ChangePresentationTests
 {
     private static string Text(string key, string fallback) => UiStrings.GetOrNull("summary.readable." + key) ?? fallback;
