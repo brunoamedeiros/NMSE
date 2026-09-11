@@ -276,6 +276,7 @@ partial class StarshipPanel
 
         _shipClass = new ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList };
         _shipClass.Items.AddRange(StarshipLogic.ShipClasses);
+        _shipClass.SelectionChangeCommitted += OnShipNameChanged;
         _classLabel = AddRow(leftPanel, "Class:", _shipClass, row++);
 
         var seedPanel = new TableLayoutPanel
