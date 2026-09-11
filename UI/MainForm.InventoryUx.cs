@@ -160,7 +160,7 @@ public partial class MainFormResources
         _saveStateLabel.Text = UiStrings.Get(_currentSaveData == null ? "inventory_ux.no_save" : dirty ? "inventory_ux.not_saved" : "inventory_ux.saved");
         _saveStateLabel.ToolTipText = UiStrings.Get("inventory_ux.marker_hint");
         bool dark = ThemeManager.Effective == AppTheme.Dark;
-        _saveStateLabel.ForeColor = dirty ? (dark ? Color.Gold : Color.DarkOrange) : (dark ? Color.Gainsboro : SystemColors.ControlText);
+        _saveStateLabel.ForeColor = dirty ? (dark ? Color.Gold : Color.FromArgb(128, 64, 0)) : (dark ? Color.Gainsboro : SystemColors.ControlText);
     }
 
     private static void SetDirtyTab(TabPage page, bool dirty)
