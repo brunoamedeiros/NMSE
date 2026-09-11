@@ -2771,7 +2771,7 @@ public partial class InventoryGridPanel : UserControl
                 int maximum = InventoryStackDatabase.GetMaxAmount(item, type, _inventoryGroup);
                 if (type == "Technology")
                     return (0, Math.Max(0, maximum), item.BuildFullyCharged ? Math.Max(0, maximum) : 0);
-                return (1, Math.Max(1, maximum), 1);
+                return (1, Math.Max(1, maximum), Math.Max(1, maximum));
             }, icons: _iconManager, isTechInventory: _isTechInventory, isCargoInventory: _isCargoInventory);
         if (picker.ShowDialog(FindForm()) != DialogResult.OK || picker.SelectedItem == null) return;
 
