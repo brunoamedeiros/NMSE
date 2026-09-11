@@ -19,6 +19,9 @@ Branch: `feature/editor-ux`. Includes the earlier item picker and search feedbac
 
 ## Review Changes
 
+- Select a change in the list to see a side-by-side Before/After table. Inventory details use item names, quantities and slot positions; slot unlocks and other fields are shown as readable values. Only changed details appear.
+- Show advanced details (JSON) reveals optional raw values beside one another. Copy Summary uses the readable comparison. Large previews explicitly indicate omitted details.
+- A grouped change uses Revert this group and a confirmation explaining that the entire group will be restored, including details outside the preview.
 - Open location and double-click reveal an inventory slot or the exact save/account JSON field.
 - Revert this change restores the selected value from the saved baseline, after checking the current value still matches the review.
 - Structural list changes are reviewed and reverted together to avoid shifting unrelated indices. Binary IDs and exact numeric values are preserved.
@@ -28,3 +31,5 @@ Branch: `feature/editor-ux`. Includes the earlier item picker and search feedbac
 ## Verification
 
 The editor test suite includes regression coverage for history, recent items, typed review paths, binary values, stale changes, and structural list reversions. Isolated Windows UI probes exercise Add/Edit/Replace/Cancel, the simplified panel, English/Portuguese labels, save/account navigation, transfers, and save/undo lifecycle using copied save data.
+
+Readable review has pure-data tests for additions, removals, replacements, coordinates, reordered slots, unknown items, exact values, and preview limits. For a visual check, add 100 Oxygen and unlock a slot, open Review Changes, and select each group. The comparison should show Empty slot → Oxygen × 100 and Locked → Unlocked at the affected positions. Toggle Advanced details to inspect the same change as JSON, then toggle back. Revert this group should confirm its scope before restoring the group in the editor.

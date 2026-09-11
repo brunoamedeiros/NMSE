@@ -57,7 +57,8 @@ public partial class MainFormResources
         if (!PreservePendingRawText()) return false;
         var report = BuildChangeSummary();
         if (report.Changes.Count == 0 && !report.Truncated) return true;
-        using var dialog = new ChangeSummaryDialog(report, beforeSave: true);
+        using var dialog = new ChangeSummaryDialog(report, beforeSave: true,
+            _database, _currentSaveData, _accountPanel.AccountData);
         if (dialog.ShowDialog(this) == DialogResult.OK) return true;
         HandleChangeReviewAction(dialog);
         return false;
@@ -71,7 +72,8 @@ public partial class MainFormResources
         {
             ActiveControl = null;
             SyncAllPanelData();
-            using var dialog = new ChangeSummaryDialog(BuildChangeSummary(), beforeSave: false);
+            using var dialog = new ChangeSummaryDialog(BuildChangeSummary(), beforeSave: false,
+                _database, _currentSaveData, _accountPanel.AccountData);
             dialog.ShowDialog(this);
             HandleChangeReviewAction(dialog);
         }

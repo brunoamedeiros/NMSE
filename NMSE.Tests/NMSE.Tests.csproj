@@ -115,6 +115,7 @@
     <Compile Include="..\Core\HotkeyLogic.cs" Link="Core\HotkeyLogic.cs" />
     <Compile Include="..\Core\ChangeSummaryLogic.cs" Link="Core\ChangeSummaryLogic.cs" />
     <Compile Include="..\Core\ChangeReviewLogic.cs" Link="Core\ChangeReviewLogic.cs" />
+    <Compile Include="..\Core\ChangePresentationLogic.cs" Link="Core\ChangePresentationLogic.cs" />
     <Compile Include="..\Core\SaveContext.cs" Link="Core\SaveContext.cs" />
   </ItemGroup>
 
