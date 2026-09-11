@@ -3725,6 +3725,7 @@ public partial class InventoryGridPanel : UserControl
         _detailMaxAmount.Enabled = true;
         _applyButton.Enabled = false;
         UpdateSeedFieldVisibility(null);
+        RefreshSelectionUx();
     }
 
     private void ClearPickerDetailPanel()

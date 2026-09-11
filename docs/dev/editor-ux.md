@@ -4,8 +4,9 @@ Branch: `feature/editor-ux`. Includes the earlier item picker and search feedbac
 
 ## Inventory editing
 
-- Double-click an unlocked empty slot to add an item. Double-click an occupied slot to edit its amount, recharge compatible technology, or choose a replacement.
-- The right panel shows the selected item and Edit, Replace, and Remove actions. Advanced controls retain the existing ID, seed, damage, stack-limit, and sidebar picker controls.
+- Double-click an unlocked empty slot to add an item. Double-click an occupied slot to focus its amount field in the sidebar.
+- Below the amount summary, enter a quantity and choose Apply or press Enter. Escape resets the input. Selecting another slot discards an unapplied amount; it never applies that amount to another item. Recharge fills the charge field for compatible technology, ready to Apply.
+- The right panel retains Replace and Remove actions. Advanced controls retain the existing ID, seed, damage, stack-limit, and sidebar picker controls. Inline Apply changes only the amount and creates one inventory Undo step; it does not apply pending Advanced fields.
 - Add and Replace open a searchable compatible-item list with an icon and description preview, quantity, and a recently used filter. Recent selections store up to ten IDs in the editor configuration and update only after confirmation.
 - Searches accept item names, IDs, and categories, including Portuguese names without accents. Cargo/technology guidance explains the available choices.
 - Applying a change displays confirmation and briefly highlights its slot. This changes the in-memory save; the user must still Save to write to disk.
