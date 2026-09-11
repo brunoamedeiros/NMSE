@@ -290,7 +290,11 @@ public partial class InventoryGridPanel : UserControl
 
     /// <summary>Raised when inventory data is modified by the user.</summary>
     public event EventHandler? DataModified;
-    private void RaiseDataModified() => DataModified?.Invoke(this, EventArgs.Empty);
+    private void RaiseDataModified()
+    {
+        InventoryUxDataModified();
+        DataModified?.Invoke(this, EventArgs.Empty);
+    }
 
     /// <summary>
     /// Raised when the user requests moving Exosuit cargo items into matching chest stacks.
@@ -493,6 +497,7 @@ public partial class InventoryGridPanel : UserControl
     {
         InitializeComponent();
         SetupLayout();
+        InitializeInventoryUx();
         PopulateSortModeOptions();
         RefreshToolbarActions();
         WireInfoTooltips();
@@ -1181,6 +1186,8 @@ public partial class InventoryGridPanel : UserControl
                 }
 
                 cell.Click += OnCellClicked;
+                cell.MouseDoubleClick += OnSlotDoubleClick;
+                cell.HasPendingEdit = _pendingPositions.Contains((col, r));
                 cell.PinToggleClicked += OnCellPinToggleClicked;
                 AttachRightClickHandler(cell);
                 AttachDragHandlers(cell);
@@ -1189,6 +1196,7 @@ public partial class InventoryGridPanel : UserControl
             }
         }
         _gridContainer.Controls.AddRange(cellsToAdd);
+        RefreshSelectionUx();
 
         _gridContainer.ResumeLayout(false);
 
@@ -2284,6 +2292,7 @@ public partial class InventoryGridPanel : UserControl
         {
             ClearDetailPanel();
             UpdatePickerApplyButtonText();
+            RefreshSelectionUx();
             return;
         }
 
@@ -2304,6 +2313,7 @@ public partial class InventoryGridPanel : UserControl
             _applyButton.Enabled = false;
             UpdateSeedFieldVisibility(null);
             UpdatePickerApplyButtonText();
+            RefreshSelectionUx();
             return;
         }
 
@@ -2371,6 +2381,7 @@ public partial class InventoryGridPanel : UserControl
 
         // Update picker button text since slot occupancy may have changed
         UpdatePickerApplyButtonText();
+        RefreshSelectionUx();
     }
 
     private void OnApplyChanges(object? sender, EventArgs e)
@@ -2761,7 +2772,7 @@ public partial class InventoryGridPanel : UserControl
                 if (type == "Technology")
                     return (0, Math.Max(0, maximum), item.BuildFullyCharged ? Math.Max(0, maximum) : 0);
                 return (1, Math.Max(1, maximum), 1);
-            });
+            }, icons: _iconManager, isTechInventory: _isTechInventory, isCargoInventory: _isCargoInventory);
         if (picker.ShowDialog(FindForm()) != DialogResult.OK || picker.SelectedItem == null) return;
 
         // Use the same insertion path as the sidebar, including procedural seeds,
@@ -2774,7 +2785,10 @@ public partial class InventoryGridPanel : UserControl
         _itemPicker.SelectedItem = picker.SelectedItem;
         _pickerAmount.NumericValue = picker.Amount;
         OnPickerApplyItem(sender, e);
+        ShowInventoryFeedback(UiStrings.Format(hasItem ? "inventory_ux.item_updated" : "inventory_ux.item_added",
+            picker.Amount, picker.SelectedItem.Name, _inventoryLocationLabel));
     }
+
     private void OnRemoveItem(object? sender, EventArgs e)
     {
         if (_contextCell?.SlotData == null || _slots == null) return;
@@ -3753,6 +3767,7 @@ public partial class InventoryGridPanel : UserControl
 
     public void ApplyUiLocalisation()
     {
+        RefreshSelectionUx();
         // Resize controls
         _resizeWidthLabel.Text = UiStrings.Get("inventory.width");
         _resizeHeightLabel.Text = UiStrings.Get("inventory.height");
@@ -4121,6 +4136,7 @@ public partial class InventoryGridPanel : UserControl
                 ControlStyles.OptimizedDoubleBuffer |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.UserPaint |
+                ControlStyles.StandardDoubleClick |
                 ControlStyles.ResizeRedraw,
                 true);
 
@@ -4259,6 +4275,9 @@ public partial class InventoryGridPanel : UserControl
             }
         }
 
+        public bool HasPendingEdit;
+        public bool FlashEdit;
+
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -4365,6 +4384,16 @@ public partial class InventoryGridPanel : UserControl
                 g.DrawRectangle(pen, ClientRectangle);
             }
 
+            if (HasPendingEdit)
+            {
+                using var marker = new SolidBrush(Color.Gold);
+                g.FillEllipse(marker, 4, h - AmountBarHeight - 14, 9, 9);
+            }
+            if (FlashEdit)
+            {
+                using var flash = new Pen(Color.DeepSkyBlue, 3f);
+                g.DrawRectangle(flash, 2, 2, Math.Max(0, w - 5), Math.Max(0, h - 5));
+            }
             base.OnPaint(e);
         }
 

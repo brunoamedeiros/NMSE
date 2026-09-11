@@ -260,6 +260,7 @@ public partial class RawJsonPanel : UserControl
         _saveData = saveData;
         _isShowingAccount = false;
         _treeModified = false;
+        _textModifiedSinceSwitch = false;
         InvalidateDisplayCache();
         // If CaptureBaseline was called immediately after loading this save file, reuse
         // that snapshot so the baseline reflects the unmodified file state. Otherwise
@@ -339,6 +340,7 @@ public partial class RawJsonPanel : UserControl
             // Switch to account data
             _isShowingAccount = true;
             _treeModified = false;
+            _textModifiedSinceSwitch = false;
             InvalidateDisplayCache();
             _originalJsonCompressed = CompressString(RawJsonLogic.ToDisplayString(_accountData));
             _undoStack.Clear();
@@ -357,6 +359,7 @@ public partial class RawJsonPanel : UserControl
             // Switch back to save data
             _isShowingAccount = false;
             _treeModified = false;
+            _textModifiedSinceSwitch = false;
             InvalidateDisplayCache();
             // Restore the baseline that was captured at load time so that changes made
             // by other panels (e.g. companion panel spinner edits) are still visible in
@@ -411,6 +414,7 @@ public partial class RawJsonPanel : UserControl
         var data = _isShowingAccount ? _accountData : _saveData;
         if (data == null) return;
 
+        _textModifiedSinceSwitch = false;
         InvalidateDisplayCache();
         if (_viewMode == ViewMode.Tree)
             BuildTree(data);
