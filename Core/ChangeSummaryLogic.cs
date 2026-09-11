@@ -148,7 +148,8 @@ internal static partial class ChangeSummaryLogic
                 string shownField = field;
                 foreach (string prefix in new[] { "BaseContext", "ExpeditionContext", "PlayerStateData", "CommonStateData" })
                     shownField = shownField.Replace(Friendly(prefix) + " / ", "", StringComparison.Ordinal);
-                changes.Add(new(section, shownField, Display(old, hadOld, path), Display(value, hasNew, path), path)
+                bool currency = IsPlayerCurrency(tokens, scope);
+                changes.Add(new(section, shownField, Display(old, hadOld, path, currency), Display(value, hasNew, path, currency), path)
                 {
                     Tokens = tokens, Scope = scope, HadBefore = hadOld, HasAfter = hasNew,
                     BeforeValue = ChangeReviewLogic.Clone(old), AfterValue = ChangeReviewLogic.Clone(value),
@@ -178,9 +179,42 @@ internal static partial class ChangeSummaryLogic
     }
 
     private static string Join(string a, string b) => a.Length == 0 ? b : a + " / " + b;
-    private static string Display(object? value, bool exists, string path)
+    internal static bool IsPlayerCurrency(IReadOnlyList<ChangeReviewLogic.PathToken> tokens, ChangeReviewLogic.DataScope scope)
+    {
+        if (scope != ChangeReviewLogic.DataScope.Save) return false;
+        int end = tokens.Count;
+        if (end > 0 && tokens[end - 1].Key is "Value" or "value") end--;
+        if (end < 2 || tokens[end - 1].Key is not ("Units" or "Nanites" or "Specials") ||
+            tokens[end - 2].Key != "PlayerStateData") return false;
+        return end == 2 || end == 3 && tokens[0].Key is "BaseContext" or "ExpeditionContext";
+    }
+
+    internal static bool TryFormatCurrency(object? value, out string text)
+    {
+        // Match the Player panel's unsigned currency display without changing the
+        // signed save representation used for exact comparisons and reversion.
+        decimal? number = value switch
+        {
+            int i => i,
+            long l => l,
+            uint u => u,
+            decimal d => d,
+            RawDouble raw when raw.Value >= int.MinValue && raw.Value <= uint.MaxValue => (decimal)raw.Value,
+            double d when d >= int.MinValue && d <= uint.MaxValue => (decimal)d,
+            _ => null
+        };
+        text = "";
+        if (number is not { } amount || amount < int.MinValue || amount > uint.MaxValue ||
+            decimal.Truncate(amount) != amount) return false;
+        if (amount < 0) amount += 4294967296m;
+        text = amount.ToString("N0", CultureInfo.CurrentCulture);
+        return true;
+    }
+
+    private static string Display(object? value, bool exists, string path, bool currency)
     {
         if (!exists) return UiStrings.Get("summary.missing");
+        if (currency && TryFormatCurrency(value, out string amount)) return amount;
         if (path.EndsWith("QuickMenuActions", StringComparison.Ordinal) && value is string action)
         {
             var option = Enumerable.Range(0, 3).SelectMany(HotkeyLogic.Options).FirstOrDefault(x => x.Id == action);
